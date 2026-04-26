@@ -1,0 +1,19 @@
+[
+  {
+    "profile_name": "ufficio",
+    "theme": "dark",
+    "devices": [
+      "keyboard"
+    ]
+  },
+  {
+    "profile_name": "home",
+    "theme": "dark",
+    "devices": []
+  },
+  {
+    "profile_name": "gameinterface",
+    "theme": "dark",
+    "devices": []
+  }
+]
