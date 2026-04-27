@@ -65,6 +65,7 @@ export class UsbWatcher {
         newDevice,
         profileName: this.currentProfile,
       });
+      console.log("UsbWatcher ha terminato la sessione di ascolto");
       usb.removeAllListeners("attach");
     });
     usb.on("detach", async (device) => {
@@ -80,6 +81,8 @@ export class UsbWatcher {
           message: `Device detached: ${name}`,
         });
       }
+
+      console.log("Periferica rimossa: ", name);
     });
   }
 

@@ -1,7 +1,6 @@
 import fs from "fs";
 
 const createProfile = (req, res) => {
-  console.log("Inizio della funzione createProfile");
   try {
     const { profile_name, theme } = req.body;
 
@@ -30,6 +29,8 @@ const createProfile = (req, res) => {
 
     profiles.push(newProfile);
     fs.writeFileSync("profile-json.json", JSON.stringify(profiles, null, 2));
+
+    console.log("È stato creato un nuovo profilo:", newProfile);
 
     res.status(200).json({
       message: "OK",

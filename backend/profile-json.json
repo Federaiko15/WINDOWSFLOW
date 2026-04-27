@@ -1,18 +1,26 @@
 [
   {
-    "profile_name": "home",
-    "theme": "dark",
+    "profile_name": "Gaming",
+    "theme": "Dark",
     "devices": [
       {
-        "name": "Logitech Mini",
-        "IdVendor": "046d",
-        "IdProduct": "c255"
+        "name": "Device 6309:770",
+        "idVendor": 6309,
+        "idProduct": 770,
+        "isAttached": true
       },
       {
-        "name": "Logitech Master",
-        "IdVendor": "046d",
-        "IdProduct": "c256"
-      },
+        "name": "Evision AK820",
+        "idVendor": 12815,
+        "idProduct": 20571,
+        "isAttached": true
+      }
+    ]
+  },
+  {
+    "profile_name": "Home",
+    "theme": "light",
+    "devices": [
       {
         "name": "Sony Interactive Entertainment Wireless Controller",
         "idVendor": 1356,
@@ -22,24 +30,8 @@
     ]
   },
   {
-    "profile_name": "ufficio",
-    "theme": "dark",
-    "devices": [
-      {
-        "name": "Logitech Mini",
-        "IdVendor": "046d",
-        "IdProduct": "c255"
-      },
-      {
-        "name": "ajazz",
-        "IdVendor": "046d",
-        "IdProduct": "c256"
-      }
-    ]
-  },
-  {
-    "profile_name": "Gaming",
-    "theme": "Dark",
+    "profile_name": "Office",
+    "theme": "light",
     "devices": []
   }
 ]
