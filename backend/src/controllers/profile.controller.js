@@ -43,13 +43,12 @@ const createProfile = (req, res) => {
 
 const updateProfile = (req, res) => {
   try {
-    const { theme, newDevice } = req.body;
+    const { theme, newDevice, removedDevices } = req.body;
     const profile_name = req.params.profile_name;
 
-    if (!theme && !newDevice) {
+    if (!theme && !newDevice && !removedDevices) {
       return res.status(400).json({
-        message:
-          "YOU HAVE TO SEND AT LEAST A NEW VALUE BETWEEN THEME AND NEW DEVICE",
+        message: "NOTHING HAS BEEN UPDATED",
       });
     }
 
@@ -77,7 +76,13 @@ const updateProfile = (req, res) => {
         if (newDevice) {
           profiles[i].devices.push(newDevice);
         }
-
+        if (removedDevices) {
+          const diff = profiles[i].devices.filter(
+            (device) =>
+              !removedDevices.find((rdevice) => rdevice.name === device.name),
+          );
+          profiles[i].devices = diff;
+        }
         break;
       }
     }

@@ -4,7 +4,8 @@ import profileRouter from "./routes/profiles.route.js";
 import dotenv from "dotenv";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import handleEvents from "../socket/events.js";
+import handleEvents from "./socket/events.js";
+import { UsbWatcher } from "./watchers/usbWatcher.js";
 
 dotenv.config({
   path: "./.env",
@@ -17,10 +18,13 @@ app.use(express.json());
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
   },
 });
+
+const usbWatcher = new UsbWatcher(io);
+app.set("usbWatcher", usbWatcher); // Salviamo l'istanza per renderla disponibile ai controller
 
 const PORT = process.env.PORT || 3000;
 
@@ -28,7 +32,7 @@ app.use("/api/v1/flow", profileRouter);
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-  handleEvents(socket);
+  handleEvents(socket, usbWatcher); // Passiamo direttamente l'istanza
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });

@@ -1,19 +1,34 @@
 [
   {
-    "profile_name": "ufficio",
+    "profile_name": "home",
     "theme": "dark",
     "devices": [
-      "keyboard"
+      {
+        "name": "Logitech Mini",
+        "IdVendor": "046d",
+        "IdProduct": "c255"
+      },
+      {
+        "name": "Logitech Master",
+        "IdVendor": "046d",
+        "IdProduct": "c256"
+      }
     ]
   },
   {
-    "profile_name": "home",
+    "profile_name": "ufficio",
     "theme": "dark",
-    "devices": []
-  },
-  {
-    "profile_name": "gameinterface",
-    "theme": "dark",
-    "devices": []
+    "devices": [
+      {
+        "name": "Logitech Mini",
+        "IdVendor": "046d",
+        "IdProduct": "c255"
+      },
+      {
+        "name": "ajazz",
+        "IdVendor": "046d",
+        "IdProduct": "c256"
+      }
+    ]
   }
 ]
