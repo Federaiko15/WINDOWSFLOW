@@ -12,6 +12,12 @@
         "name": "Logitech Master",
         "IdVendor": "046d",
         "IdProduct": "c256"
+      },
+      {
+        "name": "Sony Interactive Entertainment Wireless Controller",
+        "idVendor": 1356,
+        "idProduct": 2508,
+        "isAttached": true
       }
     ]
   },
@@ -30,5 +36,10 @@
         "IdProduct": "c256"
       }
     ]
+  },
+  {
+    "profile_name": "Gaming",
+    "theme": "Dark",
+    "devices": []
   }
 ]

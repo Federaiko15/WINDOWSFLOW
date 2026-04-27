@@ -1,6 +1,7 @@
 import fs from "fs";
 
 const createProfile = (req, res) => {
+  console.log("Inizio della funzione createProfile");
   try {
     const { profile_name, theme } = req.body;
 

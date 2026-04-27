@@ -1,4 +1,4 @@
-import usb from "usb";
+import { usb, getDeviceList } from "usb";
 
 export class UsbWatcher {
   constructor(io) {
@@ -6,11 +6,12 @@ export class UsbWatcher {
 
     this.isListening = false;
     this.devices = [];
+    this.currentProfile = "";
     this.initDevices(); // Chiamiamo un metodo per gestire il recupero asincrono dei nomi
   }
 
   async initDevices() {
-    const list = usb.getDeviceList();
+    const list = getDeviceList();
     this.devices = await Promise.all(
       list.map(async (device) => ({
         name: await this.getDeviceName(device),
@@ -21,12 +22,17 @@ export class UsbWatcher {
     );
   }
 
-  startListening() {
+  startListening(profileName) {
+    this.currentProfile = profileName;
     if (this.isListening) {
       return;
     }
     this.isListening = true;
+    console.log("UsbWatcher in ascolto di collegamenti di periferiche usb\n");
+
     usb.on("attach", async (device) => {
+      console.log("Periferica rintracciata\n");
+
       const name = await this.getDeviceName(device);
       const { idVendor, idProduct } = device.deviceDescriptor;
       const existingDevice = this.devices.find(
@@ -35,11 +41,16 @@ export class UsbWatcher {
       );
       if (existingDevice) {
         existingDevice.isAttached = true;
-        this.io.emit("attached_device", {
+        this.io.emit("device_added", {
           message: `Device already attached: ${name}`,
+          newDevice: existingDevice,
+          profileName: this.currentProfile,
         });
+        usb.removeAllListeners("attach");
+        this.isListening = false;
         return;
       }
+      console.log("Informazioni nuova periferica: ", name, idVendor, idProduct);
 
       const newDevice = {
         name,
@@ -49,9 +60,10 @@ export class UsbWatcher {
       };
       this.devices.push(newDevice);
 
-      this.io.emit("attached_device", {
+      this.io.emit("device_added", {
         message: `New device attached: ${name}`,
         newDevice,
+        profileName: this.currentProfile,
       });
       usb.removeAllListeners("attach");
     });

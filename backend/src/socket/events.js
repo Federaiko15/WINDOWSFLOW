@@ -1,6 +1,6 @@
 const handleEvents = (socket, usbWatcher) => {
-  socket.on("add_device", (device) => {
-    usbWatcher.startListening();
+  socket.on("add_device", (profileName) => {
+    usbWatcher.startListening(profileName);
   });
 };
 

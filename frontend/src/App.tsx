@@ -9,6 +9,8 @@ interface ApiGetProfiles {
 
 function App() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [profileName, setProfileName] = useState("");
+  const [theme, setTheme] = useState("");
 
   const getProfiles = async () => {
     try {
@@ -28,12 +30,70 @@ function App() {
     }
   };
 
+  const createProfile = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(profileName, theme);
+    if (!profileName || !theme) {
+      alert("Prima devi aggiungere i campi richiesti");
+      return;
+    }
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/v1/flow/profiles",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            profile_name: profileName,
+            theme: theme,
+          }),
+        },
+      );
+      if (response.ok) {
+        getProfiles();
+        setProfileName("");
+        setTheme("");
+      } else {
+        console.log("Error creating profile response");
+      }
+    } catch (error) {
+      console.error("Error creating profile:", error);
+    }
+  };
+
+  const onChangeProfileName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfileName(e.target.value);
+  };
+
+  const onChangeTheme = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTheme(e.target.value);
+  };
+
   return (
     <>
       <div className="principal-container">
         <button onClick={getProfiles} className="get_profile_button">
           Get Profiles
         </button>
+
+        <form onSubmit={createProfile} className="create_profile_form">
+          <input
+            type="text"
+            placeholder="Profile Name (Home)"
+            onChange={onChangeProfileName}
+          />
+          <input
+            type="text"
+            placeholder="Theme (Dark/Light)"
+            onChange={onChangeTheme}
+          />
+          <button type="submit" className="create_profile_button">
+            Create Profile
+          </button>
+        </form>
+
         <ul className="profile_list">
           {profiles.length > 0 ? (
             profiles.map((profile) => (
