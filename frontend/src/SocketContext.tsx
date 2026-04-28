@@ -5,11 +5,13 @@ import type { Device } from "./type";
 interface SocketContextType {
   socket: Socket | undefined;
   addDevice: (profileName: string) => void;
+  removeDevice: (profileName: string) => void;
 }
 
 const SocketContext = createContext<SocketContextType>({
   socket: undefined,
   addDevice: () => {},
+  removeDevice: () => {},
 });
 
 export const useSocket = () => {
@@ -37,7 +39,9 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       }) => {
         console.log(data.message);
         console.log(data.newDevice);
-        const confirm = window.confirm(data.message);
+        const confirm = window.confirm(
+          `${data.message}, vuoi aggiungerlo al tuo profilo?`,
+        );
         if (confirm) {
           // Evitiamo le chiamate API se il profilo è vuoto (es. //)
           if (!data.profileName) {
@@ -76,6 +80,10 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       },
     );
 
+    newSocket.on("device_removed", (data: { message: string }) => {
+      console.log(data.message);
+    });
+
     // Cleanup alla disconnessione del componente
     return () => {
       newSocket.close();
@@ -87,8 +95,16 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     socket?.emit("add_device", profileName);
   };
 
+  const removeDevice = (profileName: string) => {
+    console.log(
+      "Mandata richiesta di delete device per il profilo",
+      profileName,
+    );
+    socket?.emit("remove_device", profileName);
+  };
+
   return (
-    <SocketContext.Provider value={{ socket, addDevice }}>
+    <SocketContext.Provider value={{ socket, addDevice, removeDevice }}>
       {children}
     </SocketContext.Provider>
   );

@@ -3,10 +3,35 @@ import { useSocket } from "../SocketContext.tsx";
 
 export default function Profile({ profile }: { profile: Profile }) {
   // thanks to the Context feature i can access the socket created in SocketContext.tsx
-  const { addDevice } = useSocket();
+  const { addDevice, removeDevice } = useSocket();
 
   const handleAddDevice = () => {
     addDevice(profile.profile_name);
+  };
+
+  const handleDeleteDevice = async (device: Device) => {
+    removeDevice(profile.profile_name);
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/v1/flow/profiles/${profile.profile_name}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            removedDevice: device,
+          }),
+        },
+      );
+      if (!response.ok) {
+        console.log("Error deleting device");
+      } else {
+        console.log("Device deleted");
+      }
+    } catch (error) {
+      console.error("Error deleting device:", error);
+    }
   };
 
   const handleDeleteProfile = async () => {
@@ -37,6 +62,7 @@ export default function Profile({ profile }: { profile: Profile }) {
         {profile.devices?.map((device: Device, index: number) => (
           <li key={index} className="device_item">
             {device.name}
+            <button onClick={() => handleDeleteDevice(device)}>Elimina</button>
           </li>
         ))}
       </ul>

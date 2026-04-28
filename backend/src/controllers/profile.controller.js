@@ -2,7 +2,7 @@ import fs from "fs";
 
 const createProfile = (req, res) => {
   try {
-    const { profile_name, theme } = req.body;
+    const { profile_name, theme, startDark, startLight, active } = req.body;
 
     if (!profile_name) {
       return res.status(400).json({
@@ -10,8 +10,17 @@ const createProfile = (req, res) => {
       });
     }
     if (!theme) {
+      if (!startDark && !startLight) {
+        return res.status(400).json({
+          message:
+            "IF YOU DON'T SEND A DEFAULT THEME, YOU HAVE TO SEND THE START DARK AND START LIGHT VALUES",
+        });
+      }
+    }
+
+    if (!active) {
       return res.status(400).json({
-        message: "YOU HAVE TO ENTER A THEME VALUE",
+        message: "YOU HAVE TO SEND THE ACTIVE PROPERTY",
       });
     }
 
@@ -23,7 +32,8 @@ const createProfile = (req, res) => {
 
     const newProfile = {
       profile_name,
-      theme,
+      theme: theme ? theme : { startDark, startLight },
+      active,
       devices: [],
     }; // create a new class with the informations passed by the user
 
@@ -45,10 +55,10 @@ const createProfile = (req, res) => {
 
 const updateProfile = (req, res) => {
   try {
-    const { theme, newDevice, removedDevices } = req.body;
+    const { theme, newDevice, removedDevice } = req.body;
     const profile_name = req.params.profile_name;
 
-    if (!theme && !newDevice && !removedDevices) {
+    if (!theme && !newDevice && !removedDevice) {
       return res.status(400).json({
         message: "NOTHING HAS BEEN UPDATED",
       });
@@ -60,7 +70,6 @@ const updateProfile = (req, res) => {
       });
     }
 
-    // Rinominiamo la variabile in 'profiles' per non confonderci: contiene i dati attuali
     let profiles = JSON.parse(fs.readFileSync("profile-json.json", "utf8"));
     if (profiles.length == 0) {
       return res.status(404).json({
@@ -78,12 +87,10 @@ const updateProfile = (req, res) => {
         if (newDevice) {
           profiles[i].devices.push(newDevice);
         }
-        if (removedDevices) {
-          const diff = profiles[i].devices.filter(
-            (device) =>
-              !removedDevices.find((rdevice) => rdevice.name === device.name),
+        if (removedDevice) {
+          profiles.devices.filter(
+            (device) => device.name != removedDevice.name,
           );
-          profiles[i].devices = diff;
         }
         break;
       }

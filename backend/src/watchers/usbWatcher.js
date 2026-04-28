@@ -17,7 +17,6 @@ export class UsbWatcher {
         name: await this.getDeviceName(device),
         idVendor: device.deviceDescriptor.idVendor,
         idProduct: device.deviceDescriptor.idProduct,
-        isAttached: true,
       })),
     );
   }
@@ -28,7 +27,9 @@ export class UsbWatcher {
       return;
     }
     this.isListening = true;
-    console.log("UsbWatcher in ascolto di collegamenti di periferiche usb\n");
+    console.log(
+      "UsbWatcher in ascolto di collegamenti o scollegamenti di periferiche usb\n",
+    );
 
     usb.on("attach", async (device) => {
       console.log("Periferica rintracciata\n");
@@ -56,7 +57,6 @@ export class UsbWatcher {
         name,
         idVendor,
         idProduct,
-        isAttached: true,
       };
       this.devices.push(newDevice);
 
@@ -75,14 +75,18 @@ export class UsbWatcher {
           d.idVendor === device.deviceDescriptor.idVendor &&
           d.idProduct === device.deviceDescriptor.idProduct,
       );
+      console.log(
+        "Periferica rintracciata per scollegamento: ",
+        existingDevice,
+      );
       if (existingDevice) {
-        existingDevice.isAttached = false;
-        this.io.emit("detached_device", {
-          message: `Device detached: ${name}`,
+        this.devices.filter((device) => device.name != name);
+        this.io.emit("device_removed", {
+          message: `Device detached from profile ${this.currentProfile}: ${existingDevice}`,
         });
       }
-
       console.log("Periferica rimossa: ", name);
+      usb.removeAllListeners("detach");
     });
   }
 

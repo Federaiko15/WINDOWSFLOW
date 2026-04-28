@@ -8,5 +8,6 @@ export interface Device {
 export interface Profile {
   profile_name: string;
   theme: string;
+  active: boolean;
   devices: Device[];
 }

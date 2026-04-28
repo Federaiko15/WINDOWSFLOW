@@ -6,6 +6,7 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import handleEvents from "./socket/events.js";
 import { UsbWatcher } from "./watchers/usbWatcher.js";
+import { ThemeWatcher } from "./watchers/themeWatcher.js";
 
 dotenv.config({
   path: "./.env",
@@ -24,7 +25,9 @@ const io = new Server(httpServer, {
 });
 
 const usbWatcher = new UsbWatcher(io);
-app.set("usbWatcher", usbWatcher); // Salviamo l'istanza per renderla disponibile ai controller
+app.set("usbWatcher", usbWatcher);
+const themeWatcher = new ThemeWatcher(io);
+app.set("themeWatcher", themeWatcher);
 
 const PORT = process.env.PORT || 3000;
 
@@ -32,7 +35,8 @@ app.use("/api/v1/flow", profileRouter);
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-  handleEvents(socket, usbWatcher); // Passiamo direttamente l'istanza
+  themeWatcher.startListening(); // dovrò aggiungere un controllo che mi permette di vedere qual è il profilo attivo
+  handleEvents(socket, usbWatcher, themeWatcher);
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
