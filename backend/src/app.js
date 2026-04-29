@@ -35,7 +35,7 @@ app.use("/api/v1/flow", profileRouter);
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-  themeWatcher.startListening(); // dovrò aggiungere un controllo che mi permette di vedere qual è il profilo attivo
+  themeWatcher.startListening();
   handleEvents(socket, usbWatcher, themeWatcher);
   socket.on("disconnect", () => {
     console.log("user disconnected");

@@ -83,7 +83,9 @@ const addDays = (date, days) => {
 const getCurrentTheme = () => {
   return new Promise((resolve, reject) => {
     exec(
-      `powershell -Command "Get-ItemPropertyValue -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'SystemUsesLightTheme'"`,
+      `powershell -Command "
+      Get-ItemPropertyValue -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'SystemUsesLightTheme'
+      "`,
       (error, stdout, stderr) => {
         if (error) {
           reject(error);
@@ -100,7 +102,10 @@ const setTheme = (theme) => {
   const value = theme === "light" ? 1 : 0;
   return new Promise((resolve, reject) => {
     exec(
-      `powershell -Command "Set-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'SystemUsesLightTheme' -Value ${value}"`,
+      `powershell -Command "
+      Set-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'SystemUsesLightTheme' -Value ${value};
+      Set-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'AppsUseLightTheme' -Value ${value}
+      "`,
       (error) => {
         if (error) reject(error);
         else resolve();

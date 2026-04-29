@@ -47,8 +47,7 @@ export class UsbWatcher {
           newDevice: existingDevice,
           profileName: this.currentProfile,
         });
-        usb.removeAllListeners("attach");
-        this.isListening = false;
+        this.stopListening();
         return;
       }
       console.log("Informazioni nuova periferica: ", name, idVendor, idProduct);
@@ -66,7 +65,7 @@ export class UsbWatcher {
         profileName: this.currentProfile,
       });
       console.log("UsbWatcher ha terminato la sessione di ascolto");
-      usb.removeAllListeners("attach");
+      this.stopListening();
     });
     usb.on("detach", async (device) => {
       const name = await this.getDeviceName(device);
@@ -80,13 +79,13 @@ export class UsbWatcher {
         existingDevice,
       );
       if (existingDevice) {
-        this.devices.filter((device) => device.name != name);
+        this.devices = this.devices.filter((device) => device.name != name);
         this.io.emit("device_removed", {
           message: `Device detached from profile ${this.currentProfile}: ${existingDevice}`,
         });
       }
       console.log("Periferica rimossa: ", name);
-      usb.removeAllListeners("detach");
+      this.stopListening();
     });
   }
 

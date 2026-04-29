@@ -1,0 +1,167 @@
+/* Rosé Pine Dawn Palette */
+:root {
+  --base: #faf4ed;
+  --surface: #fffaf3;
+  --overlay: #f2e9e1;
+  --muted: #9893a5;
+  --subtle: #797593;
+  --text: #575279;
+  --love: #b4637a;
+  --gold: #ea9d34;
+  --rose: #d7827e;
+  --pine: #286983;
+  --foam: #56949f;
+  --iris: #907aa9;
+  --hl-low: #f4ebe8;
+  --hl-med: #dfdad9;
+  --hl-high: #cecacd;
+}
+
+body {
+  background-color: var(--base);
+  color: var(--text);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  padding-top: 3rem;
+}
+
+.principal-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+button {
+  background-color: var(--pine);
+  color: var(--surface);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition:
+    background-color 0.2s ease-in-out,
+    transform 0.1s ease;
+}
+
+button:hover {
+  background-color: var(--foam);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.get_profile_button {
+  margin: 0 auto 1.5rem auto;
+  display: block;
+  min-width: 200px;
+  font-size: 1.1rem;
+}
+
+.content-split {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.left-panel {
+  flex: 1;
+}
+
+.right-panel {
+  flex: 1;
+}
+
+/* Responsive per schermi più piccoli */
+@media (max-width: 768px) {
+  .content-split {
+    flex-direction: column-reverse;
+  }
+  .left-panel,
+  .right-panel {
+    width: 100%;
+  }
+}
+
+.create_profile_form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background-color: var(--overlay);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--hl-low);
+}
+
+input[type="text"],
+input[type="time"] {
+  background-color: var(--base);
+  color: var(--text);
+  border: 1px solid var(--hl-high);
+  padding: 10px 14px;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="time"]:focus {
+  border-color: var(--iris);
+}
+
+input:disabled {
+  background-color: var(--hl-low);
+  color: var(--muted);
+  cursor: not-allowed;
+  border-color: var(--hl-med);
+}
+
+.theme-selection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-selection label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: var(--subtle);
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  accent-color: var(--rose);
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+}
+
+.create_profile_button {
+  background-color: var(--rose);
+  margin-top: 0.5rem;
+}
+
+.create_profile_button:hover {
+  background-color: var(--love);
+}
+
+.profile_list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.no-profiles {
+  color: var(--muted);
+  font-style: italic;
+}

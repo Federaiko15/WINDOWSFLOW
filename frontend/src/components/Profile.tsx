@@ -1,9 +1,12 @@
+import { useState } from "react";
 import type { Profile, Device } from "../type.ts";
 import { useSocket } from "../SocketContext.tsx";
+import "../style/Profile.css";
 
 export default function Profile({ profile }: { profile: Profile }) {
   // thanks to the Context feature i can access the socket created in SocketContext.tsx
   const { addDevice, removeDevice } = useSocket();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleAddDevice = () => {
     addDevice(profile.profile_name);
@@ -53,19 +56,52 @@ export default function Profile({ profile }: { profile: Profile }) {
   };
 
   return (
-    <li className="profile">
-      <h2 className="profile_name">{profile.profile_name}</h2>
-      <button onClick={handleDeleteProfile}>Elimina Profilo</button>
-      <button onClick={handleAddDevice}>Aggiungi Periferica</button>
+    <li className="profile_card">
+      <div className="profile_header" onClick={() => setIsOpen(!isOpen)}>
+        <h2 className="profile_name">{profile.profile_name}</h2>
+        <span className="toggle_icon">{isOpen ? "▲" : "▼"}</span>
+      </div>
 
-      <ul className="device_list">
-        {profile.devices?.map((device: Device, index: number) => (
-          <li key={index} className="device_item">
-            {device.name}
-            <button onClick={() => handleDeleteDevice(device)}>Elimina</button>
-          </li>
-        ))}
-      </ul>
+      {isOpen && (
+        <div className="profile_details">
+          <p className="current_theme">
+            Theme:{" "}
+            {typeof profile.theme === "string"
+              ? profile.theme
+              : `Dinamico (Chiaro: ${(profile.theme as any)?.startLight}, Scuro: ${(profile.theme as any)?.startDark})`}
+          </p>
+          <p className="active_status">
+            Attivo: {profile.active ? "Sì" : "No"}
+          </p>
+          <div className="profile_actions">
+            <button
+              className="btn_delete_profile"
+              onClick={handleDeleteProfile}
+            >
+              Elimina
+            </button>
+            <button className="btn_add_device" onClick={handleAddDevice}>
+              + Periferica
+            </button>
+          </div>
+
+          <ul className="device_list">
+            {profile.devices?.map((device: Device, index: number) => (
+              <li key={index} className="device_item">
+                <span className="device_info">
+                  {device.name} <small>({device.type})</small>
+                </span>
+                <button
+                  className="btn_delete_device"
+                  onClick={() => handleDeleteDevice(device)}
+                >
+                  Rimuovi
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </li>
   );
 }

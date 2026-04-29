@@ -3,6 +3,7 @@ export interface Device {
   idVendor: string;
   idProduct: string;
   isAttached: boolean;
+  type: string;
 }
 
 export interface Profile {

@@ -2,23 +2,23 @@ import fs from "fs";
 
 const createProfile = (req, res) => {
   try {
-    const { profile_name, theme, startDark, startLight, active } = req.body;
+    const { profile_name, theme, active } = req.body;
 
     if (!profile_name) {
+      console.log("CREATE PROFILE API: NO PROFILE NAME");
       return res.status(400).json({
         message: "YOU HAVE TO SEND A PROFILE NAME",
       });
     }
     if (!theme) {
-      if (!startDark && !startLight) {
-        return res.status(400).json({
-          message:
-            "IF YOU DON'T SEND A DEFAULT THEME, YOU HAVE TO SEND THE START DARK AND START LIGHT VALUES",
-        });
-      }
+      console.log("CREATE PROFILE API: NO THEME");
+      return res.status(400).json({
+        message: "YOU HAVE TO SEND A THEME",
+      });
     }
 
-    if (!active) {
+    if (!(active == false || active == true)) {
+      console.log("CREATE PROFILE API: NO ACTIVE");
       return res.status(400).json({
         message: "YOU HAVE TO SEND THE ACTIVE PROPERTY",
       });
@@ -32,7 +32,7 @@ const createProfile = (req, res) => {
 
     const newProfile = {
       profile_name,
-      theme: theme ? theme : { startDark, startLight },
+      theme,
       active,
       devices: [],
     }; // create a new class with the informations passed by the user
@@ -59,12 +59,14 @@ const updateProfile = (req, res) => {
     const profile_name = req.params.profile_name;
 
     if (!theme && !newDevice && !removedDevice) {
+      console.log("UPDATE PROFILE API: NOTHING HAS BEEN UPDATED");
       return res.status(400).json({
         message: "NOTHING HAS BEEN UPDATED",
       });
     }
 
     if (!fs.existsSync("profile-json.json")) {
+      console.log("UPDATE PROFILE API: PROFILES FILE NOT FOUND");
       return res.status(404).json({
         message: "PROFILES FILE NOT FOUND",
       });
@@ -72,6 +74,7 @@ const updateProfile = (req, res) => {
 
     let profiles = JSON.parse(fs.readFileSync("profile-json.json", "utf8"));
     if (profiles.length == 0) {
+      console.log("UPDATE PROFILE API: NO PROFILES");
       return res.status(404).json({
         message: "PROFILES MISSED",
       });
@@ -88,7 +91,7 @@ const updateProfile = (req, res) => {
           profiles[i].devices.push(newDevice);
         }
         if (removedDevice) {
-          profiles.devices.filter(
+          profiles[i].devices = profiles[i].devices.filter(
             (device) => device.name != removedDevice.name,
           );
         }
@@ -96,11 +99,13 @@ const updateProfile = (req, res) => {
       }
     }
     if (!profile_exist) {
+      console.log("UPDATE PROFILE API: PROFILE NOT FOUND");
       return res.status(404).json({
         message: "PROFILE NOT FOUND",
       });
     }
     fs.writeFileSync("profile-json.json", JSON.stringify(profiles, null, 2));
+    console.log("DEVICE REMOVED SUCCESSFULLY");
     res.status(200).json({
       message: "OK",
       data: profiles,

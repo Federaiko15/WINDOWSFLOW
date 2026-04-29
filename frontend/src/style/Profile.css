@@ -1,0 +1,125 @@
+.profile_card {
+  background-color: var(--overlay);
+  color: var(--text);
+  border-radius: 8px;
+  border-left: 5px solid var(--gold);
+  font-weight: 500;
+  box-shadow: 0 2px 4px var(--hl-low);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.profile_card:hover {
+  box-shadow: 0 4px 8px var(--hl-med);
+}
+
+.profile_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.profile_header:hover {
+  background-color: var(--hl-low);
+}
+
+.profile_name {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--pine);
+}
+
+.toggle_icon {
+  font-size: 0.9rem;
+  color: var(--subtle);
+}
+
+.profile_details {
+  padding: 0 1.2rem 1.2rem 1.2rem;
+  border-top: 1px solid var(--hl-low);
+  animation: fadeInDown 0.3s ease-in-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.current_theme,
+.active_status {
+  margin: 0.5rem 0;
+  color: var(--subtle);
+}
+
+.profile_actions {
+  display: flex;
+  gap: 10px;
+  margin: 1rem 0;
+}
+
+.btn_delete_profile {
+  background-color: var(--love);
+}
+
+.btn_delete_profile:hover {
+  background-color: var(--rose);
+}
+
+.btn_add_device {
+  background-color: var(--foam);
+}
+
+.btn_add_device:hover {
+  background-color: var(--pine);
+}
+
+.device_list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.device_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--base);
+  padding: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid var(--hl-low);
+}
+
+.device_info {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.device_info small {
+  color: var(--muted);
+  font-weight: normal;
+}
+
+.btn_delete_device {
+  background-color: var(--hl-high);
+  color: var(--text);
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+.btn_delete_device:hover {
+  background-color: var(--love);
+  color: var(--surface);
+}

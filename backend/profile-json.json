@@ -1,37 +1,43 @@
 [
   {
-    "profile_name": "Gaming",
-    "theme": "Dark",
+    "profile_name": "Home",
+    "theme": "light",
+    "active": false,
     "devices": [
       {
-        "name": "Device 6309:770",
-        "idVendor": 6309,
-        "idProduct": 770,
-        "isAttached": true
-      },
-      {
-        "name": "Evision AK820",
-        "idVendor": 12815,
-        "idProduct": 20571,
-        "isAttached": true
+        "name": "Logitech USB Receiver",
+        "idVendor": 1133,
+        "idProduct": 50504,
+        "type": "mouse"
       }
     ]
   },
   {
-    "profile_name": "Home",
-    "theme": "light",
+    "profile_name": "Gaming",
+    "theme": "Dark",
+    "active": false,
     "devices": [
       {
         "name": "Sony Interactive Entertainment Wireless Controller",
         "idVendor": 1356,
         "idProduct": 2508,
-        "isAttached": true
+        "type": "controller"
+      },
+      {
+        "name": "Evision AK820",
+        "idVendor": 12815,
+        "idProduct": 20571,
+        "type": "keyboard"
       }
     ]
   },
   {
     "profile_name": "Office",
-    "theme": "light",
+    "theme": {
+      "startLight": "07:00",
+      "startDark": "19:00"
+    },
+    "active": false,
     "devices": []
   }
 ]
