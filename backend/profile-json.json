@@ -2,15 +2,8 @@
   {
     "profile_name": "Home",
     "theme": "light",
-    "active": false,
-    "devices": [
-      {
-        "name": "Logitech USB Receiver",
-        "idVendor": 1133,
-        "idProduct": 50504,
-        "type": "mouse"
-      }
-    ]
+    "active": true,
+    "devices": []
   },
   {
     "profile_name": "Gaming",
@@ -34,8 +27,8 @@
   {
     "profile_name": "Office",
     "theme": {
-      "startLight": "07:00",
-      "startDark": "19:00"
+      "startLight": "08:15",
+      "startDark": "22:30"
     },
     "active": false,
     "devices": []

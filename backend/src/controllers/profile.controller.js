@@ -55,10 +55,15 @@ const createProfile = (req, res) => {
 
 const updateProfile = (req, res) => {
   try {
-    const { theme, newDevice, removedDevice } = req.body;
+    const { theme, newDevice, removedDevice, active } = req.body;
     const profile_name = req.params.profile_name;
 
-    if (!theme && !newDevice && !removedDevice) {
+    if (
+      !theme &&
+      !newDevice &&
+      !removedDevice &&
+      !(active == false || active == true)
+    ) {
       console.log("UPDATE PROFILE API: NOTHING HAS BEEN UPDATED");
       return res.status(400).json({
         message: "NOTHING HAS BEEN UPDATED",
@@ -95,6 +100,9 @@ const updateProfile = (req, res) => {
             (device) => device.name != removedDevice.name,
           );
         }
+        if (active == true || active == false) {
+          profiles[i].active = active;
+        }
         break;
       }
     }
@@ -105,7 +113,6 @@ const updateProfile = (req, res) => {
       });
     }
     fs.writeFileSync("profile-json.json", JSON.stringify(profiles, null, 2));
-    console.log("DEVICE REMOVED SUCCESSFULLY");
     res.status(200).json({
       message: "OK",
       data: profiles,

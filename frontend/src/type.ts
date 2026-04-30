@@ -12,3 +12,8 @@ export interface Profile {
   active: boolean;
   devices: Device[];
 }
+
+export interface ApiGetProfiles {
+  message: string;
+  data: Profile[];
+}

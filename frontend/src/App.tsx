@@ -1,37 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProfileCard from "./components/Profile";
-import type { Profile } from "./type.ts";
+import { useSocket } from "./SocketContext";
 import "./style/App.css";
 
-interface ApiGetProfiles {
-  message: string;
-  data: Profile[];
-}
-
 function App() {
-  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const { getProfiles: emitGetProfiles, profiles } = useSocket();
   const [profileName, setProfileName] = useState("");
   const [theme, setTheme] = useState("");
   const [timeLight, setTimeLight] = useState("07:00");
   const [timeDark, setTimeDark] = useState("19:00");
   const [isDynamicTheme, setIsDynamicTheme] = useState(false);
 
-  const getProfiles = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:4000/api/v1/flow/profiles",
-        {
-          method: "GET",
-        },
-      );
-      if (!response.ok) {
-        console.log("Error getting profiles response");
-      }
-      const result: ApiGetProfiles = await response.json();
-      setProfiles(result.data);
-    } catch (error) {
-      console.error("Error getting profiles:", error);
-    }
+  useEffect(() => {
+    emitGetProfiles();
+  }, []);
+
+  const handleGetProfiles = async () => {
+    await emitGetProfiles();
   };
 
   const createProfile = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,7 +55,7 @@ function App() {
         },
       );
       if (response.ok) {
-        getProfiles();
+        handleGetProfiles();
         setProfileName("");
         setTheme("");
       } else {
@@ -99,7 +84,7 @@ function App() {
   return (
     <>
       <div className="principal-container">
-        <button onClick={getProfiles} className="get_profile_button">
+        <button onClick={handleGetProfiles} className="get_profile_button">
           Get Profiles
         </button>
 

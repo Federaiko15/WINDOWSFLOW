@@ -1,58 +1,20 @@
 import { useState } from "react";
 import type { Profile, Device } from "../type.ts";
-import { useSocket } from "../SocketContext.tsx";
 import "../style/Profile.css";
+import DeviceDetailsModal from "./DeviceDetailsModal";
+import { useProfileActions } from "../hooks/useProfileActions.ts";
 
 export default function Profile({ profile }: { profile: Profile }) {
-  // thanks to the Context feature i can access the socket created in SocketContext.tsx
-  const { addDevice, removeDevice } = useSocket();
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
 
-  const handleAddDevice = () => {
-    addDevice(profile.profile_name);
-  };
+  // Usiamo il nostro Custom Hook
+  const { isActive, toggleActive, deleteDevice, deleteProfile, addDevice } =
+    useProfileActions(profile.profile_name, profile.active);
 
-  const handleDeleteDevice = async (device: Device) => {
-    removeDevice(profile.profile_name);
-    try {
-      const response = await fetch(
-        `http://localhost:4000/api/v1/flow/profiles/${profile.profile_name}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            removedDevice: device,
-          }),
-        },
-      );
-      if (!response.ok) {
-        console.log("Error deleting device");
-      } else {
-        console.log("Device deleted");
-      }
-    } catch (error) {
-      console.error("Error deleting device:", error);
-    }
-  };
-
-  const handleDeleteProfile = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:4000/api/v1/flow/profiles/${profile.profile_name}`,
-        {
-          method: "DELETE",
-        },
-      );
-      if (!response.ok) {
-        console.log("Error deleting profile");
-      } else {
-        console.log("Profile deleted");
-      }
-    } catch (error) {
-      console.error("Error deleting profile:", error);
-    }
+  const handleToggleActive = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation(); // Evita di aprire/chiudere i dettagli del profilo al click
+    await toggleActive();
   };
 
   return (
@@ -60,6 +22,12 @@ export default function Profile({ profile }: { profile: Profile }) {
       <div className="profile_header" onClick={() => setIsOpen(!isOpen)}>
         <h2 className="profile_name">{profile.profile_name}</h2>
         <span className="toggle_icon">{isOpen ? "▲" : "▼"}</span>
+        <button
+          className={`toggle_switch ${isActive ? "on" : "off"}`}
+          onClick={handleToggleActive}
+        >
+          <span className="toggle_slider"></span>
+        </button>
       </div>
 
       {isOpen && (
@@ -70,30 +38,32 @@ export default function Profile({ profile }: { profile: Profile }) {
               ? profile.theme
               : `Dinamico (Chiaro: ${(profile.theme as any)?.startLight}, Scuro: ${(profile.theme as any)?.startDark})`}
           </p>
-          <p className="active_status">
-            Attivo: {profile.active ? "Sì" : "No"}
-          </p>
+          <p className="active_status">Attivo: {isActive ? "Sì" : "No"}</p>
           <div className="profile_actions">
-            <button
-              className="btn_delete_profile"
-              onClick={handleDeleteProfile}
-            >
+            <button className="btn_delete_profile" onClick={deleteProfile}>
               Elimina
             </button>
-            <button className="btn_add_device" onClick={handleAddDevice}>
+            <button className="btn_add_device" onClick={addDevice}>
               + Periferica
             </button>
           </div>
 
           <ul className="device_list">
             {profile.devices?.map((device: Device, index: number) => (
-              <li key={index} className="device_item">
+              <li
+                key={index}
+                className="device_item"
+                onClick={() => setSelectedDevice(device)}
+              >
                 <span className="device_info">
                   {device.name} <small>({device.type})</small>
                 </span>
                 <button
                   className="btn_delete_device"
-                  onClick={() => handleDeleteDevice(device)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteDevice(device);
+                  }}
                 >
                   Rimuovi
                 </button>
@@ -101,6 +71,13 @@ export default function Profile({ profile }: { profile: Profile }) {
             ))}
           </ul>
         </div>
+      )}
+
+      {selectedDevice && (
+        <DeviceDetailsModal
+          device={selectedDevice}
+          onClose={() => setSelectedDevice(null)}
+        />
       )}
     </li>
   );

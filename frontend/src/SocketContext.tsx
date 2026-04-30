@@ -1,17 +1,22 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
-import type { Device } from "./type";
+import type { Device, ApiGetProfiles, Profile } from "./type";
+import "./style/SocketContext.css";
 
 interface SocketContextType {
   socket: Socket | undefined;
   addDevice: (profileName: string) => void;
   removeDevice: (profileName: string) => void;
+  getProfiles: () => void;
+  profiles: Profile[];
 }
 
 const SocketContext = createContext<SocketContextType>({
   socket: undefined,
   addDevice: () => {},
   removeDevice: () => {},
+  getProfiles: async () => {},
+  profiles: [],
 });
 
 export const useSocket = () => {
@@ -26,6 +31,8 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     profileName: string;
   } | null>(null);
   const [selectedType, setSelectedType] = useState<string>("keyboard");
+  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [isSearchingDevices, setIsSearchingDevices] = useState<boolean>(false);
 
   useEffect(() => {
     const newSocket = io("http://localhost:4000");
@@ -40,7 +47,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       "device_added",
       (data: { message: string; newDevice: Device; profileName: string }) => {
         console.log(data.message);
-        console.log(data.newDevice);
+        setIsSearchingDevices(false);
         setPendingDeviceData(data);
       },
     );
@@ -90,12 +97,31 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
         console.log("Error adding device");
       } else {
         console.log("Device added");
+        getProfiles();
       }
     } catch (error) {
       console.error("Error adding device:", error);
     }
     setPendingDeviceData(null);
     setSelectedType("keyboard"); // reset
+  };
+
+  const getProfiles = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/v1/flow/profiles",
+        {
+          method: "GET",
+        },
+      );
+      if (!response.ok) {
+        console.log("Error getting profiles response");
+      }
+      const result: ApiGetProfiles = await response.json();
+      setProfiles(result.data);
+    } catch (error) {
+      console.error("Error getting profiles:", error);
+    }
   };
 
   const handleCancelAddDevice = () => {
@@ -105,6 +131,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
   const addDevice = (profileName: string) => {
     console.log("Mandata richiesta di add device per il profilo", profileName);
+    setIsSearchingDevices(true);
     socket?.emit("add_device", profileName);
   };
 
@@ -116,13 +143,36 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     socket?.emit("remove_device", profileName);
   };
 
+  const handleCancelListening = () => {
+    setIsSearchingDevices(false);
+    socket?.emit("stop_listening");
+  };
+
   return (
-    <SocketContext.Provider value={{ socket, addDevice, removeDevice }}>
+    <SocketContext.Provider
+      value={{ socket, addDevice, removeDevice, getProfiles, profiles }}
+    >
       {children}
 
+      {isSearchingDevices && (
+        <div className="socket_overlay">
+          <div className="socket_modal">
+            <div className="listening_spinner"></div>
+            <h3>In ascolto...</h3>
+            <p>Collega una nuova periferica USB al computer.</p>
+            <button
+              className="btn_cancel_listening"
+              onClick={handleCancelListening}
+            >
+              Annulla
+            </button>
+          </div>
+        </div>
+      )}
+
       {pendingDeviceData && (
-        <div style={overlayStyle}>
-          <div style={modalStyle}>
+        <div className="socket_overlay">
+          <div className="socket_modal">
             <h3>Nuova periferica rilevata</h3>
             <p>{pendingDeviceData.message}</p>
             <ul
@@ -188,28 +238,4 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       )}
     </SocketContext.Provider>
   );
-};
-
-const overlayStyle: React.CSSProperties = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100vw",
-  height: "100vh",
-  backgroundColor: "rgba(0, 0, 0, 0.6)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 9999,
-};
-
-const modalStyle: React.CSSProperties = {
-  backgroundColor: "#fff",
-  color: "#333",
-  padding: "20px",
-  borderRadius: "8px",
-  maxWidth: "500px",
-  width: "100%",
-  boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-  textAlign: "center",
 };
