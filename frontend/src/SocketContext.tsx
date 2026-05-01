@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
-import type { Device, ApiGetProfiles, Profile } from "./type";
+import type { Device, ApiGetProfiles, Profile, Layouts } from "./type";
 import "./style/SocketContext.css";
 
 interface SocketContextType {
@@ -9,6 +9,7 @@ interface SocketContextType {
   removeDevice: (profileName: string) => void;
   getProfiles: () => void;
   profiles: Profile[];
+  layouts: Layouts[];
 }
 
 const SocketContext = createContext<SocketContextType>({
@@ -17,6 +18,7 @@ const SocketContext = createContext<SocketContextType>({
   removeDevice: () => {},
   getProfiles: async () => {},
   profiles: [],
+  layouts: [],
 });
 
 export const useSocket = () => {
@@ -32,6 +34,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   } | null>(null);
   const [selectedType, setSelectedType] = useState<string>("keyboard");
   const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [layouts, setLayouts] = useState<Layouts[]>([]);
   const [isSearchingDevices, setIsSearchingDevices] = useState<boolean>(false);
 
   useEffect(() => {
@@ -54,6 +57,11 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
     newSocket.on("device_removed", (data: { message: string }) => {
       console.log(data.message);
+    });
+
+    newSocket.on("layouts", (data: Layouts[]) => {
+      console.log("Received layouts:", data);
+      setLayouts(data);
     });
 
     // Cleanup alla disconnessione del componente
@@ -150,7 +158,14 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <SocketContext.Provider
-      value={{ socket, addDevice, removeDevice, getProfiles, profiles }}
+      value={{
+        socket,
+        addDevice,
+        removeDevice,
+        getProfiles,
+        profiles,
+        layouts,
+      }}
     >
       {children}
 

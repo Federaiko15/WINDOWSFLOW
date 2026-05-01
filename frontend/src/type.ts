@@ -17,3 +17,8 @@ export interface ApiGetProfiles {
   message: string;
   data: Profile[];
 }
+
+export interface Layouts {
+  id: string;
+  name: string;
+}
