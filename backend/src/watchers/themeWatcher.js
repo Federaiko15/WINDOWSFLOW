@@ -2,9 +2,9 @@ import themeSetter from "../services/themeSetter.js";
 import fs from "fs";
 
 export class ThemeWatcher {
-  constructor(io, currentTheme) {
-    this.io = io;
-    this.currentTheme = currentTheme;
+  constructor() {
+    this.currentTheme = "";
+    this.isListening = false;
   }
 
   startListening() {
@@ -12,9 +12,7 @@ export class ThemeWatcher {
       return;
     }
     this.isListening = true;
-    console.log(
-      "ThemeWatcher in ascolto per la verifica del tema da adottare\n",
-    );
+    console.log("Theme Watcher attivato per il cambio di tema");
 
     let profiles = [];
     if (fs.existsSync("profile-json.json")) {
@@ -24,14 +22,18 @@ export class ThemeWatcher {
     let isAProfileActive = false;
     for (let i = 0; i < profiles.length; i++) {
       if (profiles[i].active == true) {
+        console.log("Profilo attivo trovato:", profiles[i]);
         isAProfileActive = true;
         this.currentTheme = profiles[i].theme;
         break;
       }
     }
     if (!isAProfileActive) {
+      console.log("Nessun profilo attivo trovato");
       return;
     }
+    console.log("Tema del Profilo Attivo: ", this.currentTheme);
     themeSetter(this.currentTheme);
+    this.isListening = false;
   }
 }

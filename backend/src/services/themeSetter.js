@@ -19,9 +19,12 @@ const themeSetter = async (theme) => {
 };
 
 const applyTheme = async (themeName) => {
+  const normalizedTheme = themeName.toLowerCase();
   const currentTheme = await getCurrentTheme();
-  if (currentTheme !== themeName) {
-    await setTheme(themeName);
+  console.log("Tema corrente:", currentTheme);
+  if (currentTheme !== normalizedTheme) {
+    console.log("I temi sono diversi, quindi cambiamo il tema corrente");
+    await setTheme(normalizedTheme);
   }
 };
 
@@ -83,15 +86,18 @@ const addDays = (date, days) => {
 const getCurrentTheme = () => {
   return new Promise((resolve, reject) => {
     exec(
-      `powershell -Command "
-      Get-ItemPropertyValue -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'SystemUsesLightTheme'
-      "`,
+      `powershell -Command "(Get-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize').SystemUsesLightTheme"`,
       (error, stdout, stderr) => {
+        console.log("stdout raw:", JSON.stringify(stdout));
+        console.log("stderr:", stderr);
+
         if (error) {
           reject(error);
           return;
         }
+
         const value = parseInt(stdout.trim());
+        console.log("value:", value);
         resolve(value === 1 ? "light" : "dark");
       },
     );
@@ -100,15 +106,23 @@ const getCurrentTheme = () => {
 
 const setTheme = (theme) => {
   const value = theme === "light" ? 1 : 0;
+
   return new Promise((resolve, reject) => {
     exec(
-      `powershell -Command "
-      Set-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'SystemUsesLightTheme' -Value ${value};
-      Set-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'AppsUseLightTheme' -Value ${value}
-      "`,
-      (error) => {
-        if (error) reject(error);
-        else resolve();
+      `powershell -Command "Set-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'AppsUseLightTheme' -Value ${value}"`,
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        // Secondo comando separato
+        exec(
+          `powershell -Command "Set-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'SystemUsesLightTheme' -Value ${value}"`,
+          (error2) => {
+            if (error2) reject(error2);
+            else resolve();
+          },
+        );
       },
     );
   });

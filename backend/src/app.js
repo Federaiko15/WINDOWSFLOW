@@ -26,7 +26,7 @@ const io = new Server(httpServer, {
 
 const usbWatcher = new UsbWatcher(io);
 app.set("usbWatcher", usbWatcher);
-const themeWatcher = new ThemeWatcher(io);
+const themeWatcher = new ThemeWatcher();
 app.set("themeWatcher", themeWatcher);
 
 const PORT = process.env.PORT || 3000;

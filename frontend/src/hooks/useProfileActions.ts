@@ -12,6 +12,7 @@ export function useProfileActions(
     getProfiles,
   } = useSocket();
   const [isActive, setIsActive] = useState(initialActiveState);
+  const { socket } = useSocket();
 
   // Sincronizziamo lo stato locale se i dati in entrata dovessero aggiornarsi
   // in seguito a un ricaricamento (getProfiles() nel padre App.tsx)
@@ -41,6 +42,10 @@ export function useProfileActions(
         setIsActive(!newActiveState); // Revert dello stato se fallisce la chiamata
       } else {
         console.log("Profile status updated");
+        if (newActiveState === true) {
+          socket?.emit("change_active_profile");
+        }
+
         getProfiles();
       }
     } catch (error) {

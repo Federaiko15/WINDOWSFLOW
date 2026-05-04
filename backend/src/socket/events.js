@@ -11,6 +11,9 @@ const handleEvents = (socket, usbWatcher, themeWatcher) => {
     usbWatcher.stopListening();
     console.log("Stopped listening for devices");
   });
+  socket.on("change_active_profile", () => {
+    themeWatcher.startListening();
+  });
   socket.on("get_layouts", async () => {
     const layouts = await getInstalledLayout();
     socket.emit("layouts", layouts);

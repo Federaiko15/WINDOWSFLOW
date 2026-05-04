@@ -1,11 +1,5 @@
 [
   {
-    "profile_name": "Home",
-    "theme": "light",
-    "active": true,
-    "devices": []
-  },
-  {
     "profile_name": "Gaming",
     "theme": "Dark",
     "active": false,
@@ -31,6 +25,12 @@
       "startDark": "22:30"
     },
     "active": false,
+    "devices": []
+  },
+  {
+    "profile_name": "Home",
+    "theme": "Light",
+    "active": true,
     "devices": []
   }
 ]
