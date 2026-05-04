@@ -35,4 +35,28 @@ const getInstalledLayout = () => {
   });
 };
 
-export default getInstalledLayout;
+const setLayout = (layoutId) => {
+  const [languageCode, inputMethod] = layoutId.split(":");
+
+  return new Promise((resolve, reject) => {
+    exec(
+      `powershell -Command "
+        $list = Get-WinUserLanguageList;
+        $list[0].InputMethodTips.Clear();
+        $list[0].InputMethodTips.Add('${languageCode}:${inputMethod}');
+        Set-WinUserLanguageList $list -Force
+      "`,
+      (error, stdout, stderr) => {
+        console.log("stdout:", stdout);
+        console.log("stderr:", stderr);
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve();
+      },
+    );
+  });
+};
+
+export { setLayout, getInstalledLayout };

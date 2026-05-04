@@ -77,6 +77,7 @@ export default function Profile({ profile }: { profile: Profile }) {
         <DeviceDetailsModal
           device={selectedDevice}
           onClose={() => setSelectedDevice(null)}
+          profileName={profile.profile_name}
         />
       )}
     </li>

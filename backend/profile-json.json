@@ -25,7 +25,19 @@
       "startDark": "22:30"
     },
     "active": false,
-    "devices": []
+    "devices": [
+      {
+        "name": "Evision AK820",
+        "idVendor": 12815,
+        "idProduct": 20571,
+        "isAttached": true,
+        "type": "keyboard",
+        "layout": {
+          "id": "0410:00000410",
+          "name": "Italiano"
+        }
+      }
+    ]
   },
   {
     "profile_name": "Home",

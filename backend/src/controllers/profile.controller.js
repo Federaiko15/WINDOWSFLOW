@@ -55,14 +55,15 @@ const createProfile = (req, res) => {
 
 const updateProfile = (req, res) => {
   try {
-    const { theme, newDevice, removedDevice, active } = req.body;
+    const { theme, newDevice, removedDevice, active, newLayoutInfo } = req.body;
     const profile_name = req.params.profile_name;
 
     if (
       !theme &&
       !newDevice &&
       !removedDevice &&
-      !(active == false || active == true)
+      !(active == false || active == true) &&
+      !newLayoutInfo
     ) {
       console.log("UPDATE PROFILE API: NOTHING HAS BEEN UPDATED");
       return res.status(400).json({
@@ -102,6 +103,16 @@ const updateProfile = (req, res) => {
         }
         if (active == true || active == false) {
           profiles[i].active = active;
+        }
+        if (newLayoutInfo) {
+          profiles[i].devices.map((device) => {
+            if (
+              device.idVendor == newLayoutInfo.idVendor &&
+              device.idProduct == newLayoutInfo.idProduct
+            ) {
+              device.layout = newLayoutInfo.layout;
+            }
+          });
         }
         break;
       }

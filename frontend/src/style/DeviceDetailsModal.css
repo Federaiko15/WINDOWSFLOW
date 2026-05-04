@@ -1,0 +1,81 @@
+.device_details_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.device_details_modal {
+  background-color: var(--surface);
+  color: var(--text);
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--hl-low);
+}
+
+.device_details_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--hl-low);
+  padding-bottom: 10px;
+}
+
+.device_details_header h3 {
+  margin: 0;
+  color: var(--pine);
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.btn_close_modal {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.btn_close_modal:hover {
+  background-color: transparent;
+  color: var(--love);
+}
+
+.device_details_content p {
+  margin: 10px 0;
+  color: var(--subtle);
+}
+
+.device_details_content strong {
+  color: var(--text);
+}
+
+.change-layout-button {
+  margin-top: 15px;
+  width: 100%;
+  background-color: var(--pine);
+  color: var(--surface);
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.change-layout-button:disabled {
+  background-color: var(--hl-high);
+  color: var(--muted);
+  cursor: not-allowed;
+}

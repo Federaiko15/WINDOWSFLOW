@@ -1,4 +1,5 @@
 import { usb, getDeviceList } from "usb";
+import getDeviceName from "../services/getDeviceName.js";
 
 export class UsbWatcher {
   constructor(io) {
@@ -14,9 +15,10 @@ export class UsbWatcher {
     const list = getDeviceList();
     this.devices = await Promise.all(
       list.map(async (device) => ({
-        name: await this.getDeviceName(device),
+        name: await getDeviceName(device),
         idVendor: device.deviceDescriptor.idVendor,
         idProduct: device.deviceDescriptor.idProduct,
+        isAttached: true,
       })),
     );
   }
@@ -34,7 +36,7 @@ export class UsbWatcher {
     usb.on("attach", async (device) => {
       console.log("Periferica rintracciata\n");
 
-      const name = await this.getDeviceName(device);
+      const name = await getDeviceName(device);
       const { idVendor, idProduct } = device.deviceDescriptor;
       const existingDevice = this.devices.find(
         (device) =>
@@ -68,7 +70,7 @@ export class UsbWatcher {
       this.stopListening();
     });
     usb.on("detach", async (device) => {
-      const name = await this.getDeviceName(device);
+      const name = await getDeviceName(device);
       const existingDevice = this.devices.find(
         (d) =>
           d.idVendor === device.deviceDescriptor.idVendor &&
@@ -96,49 +98,5 @@ export class UsbWatcher {
     this.isListening = false;
     usb.removeAllListeners("attach");
     usb.removeAllListeners("detach");
-  }
-
-  getDeviceName(device) {
-    return new Promise((resolve) => {
-      try {
-        device.open();
-
-        device.getStringDescriptor(
-          device.deviceDescriptor.iManufacturer,
-          (errManufacturer, manufacturer) => {
-            if (errManufacturer) {
-              try {
-                device.close();
-              } catch (e) {}
-              return resolve(
-                `Device ${device.deviceDescriptor.idVendor}:${device.deviceDescriptor.idProduct}`,
-              );
-            }
-
-            device.getStringDescriptor(
-              device.deviceDescriptor.iProduct,
-              (errProduct, product) => {
-                try {
-                  device.close();
-                } catch (e) {}
-                if (errProduct) {
-                  return resolve(
-                    `Device ${device.deviceDescriptor.idVendor}:${device.deviceDescriptor.idProduct}`,
-                  );
-                }
-                resolve(`${manufacturer} ${product}`);
-              },
-            );
-          },
-        );
-      } catch (error) {
-        try {
-          device.close();
-        } catch (e) {}
-        resolve(
-          `Device ${device.deviceDescriptor.idVendor}:${device.deviceDescriptor.idProduct}`,
-        );
-      }
-    });
   }
 }

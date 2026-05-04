@@ -33,6 +33,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     profileName: string;
   } | null>(null);
   const [selectedType, setSelectedType] = useState<string>("keyboard");
+  const [selectedLayout, setSelectedLayout] = useState<string>("");
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [layouts, setLayouts] = useState<Layouts[]>([]);
   const [isSearchingDevices, setIsSearchingDevices] = useState<boolean>(false);
@@ -70,6 +71,18 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (pendingDeviceData && selectedType === "keyboard") {
+      socket?.emit("get_layouts");
+    }
+  }, [pendingDeviceData, selectedType, socket]);
+
+  useEffect(() => {
+    if (layouts.length > 0 && !selectedLayout) {
+      setSelectedLayout(layouts[0].name);
+    }
+  }, [layouts, selectedLayout]);
+
   const handleConfirmAddDevice = async () => {
     if (!pendingDeviceData) return;
 
@@ -86,6 +99,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       const deviceWithType = {
         ...pendingDeviceData.newDevice,
         type: selectedType,
+        layout: selectedType === "keyboard" ? selectedLayout : undefined,
       };
 
       const response = await fetch(
@@ -112,6 +126,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     }
     setPendingDeviceData(null);
     setSelectedType("keyboard"); // reset
+    setSelectedLayout(""); // reset
   };
 
   const getProfiles = async () => {
@@ -135,6 +150,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   const handleCancelAddDevice = () => {
     setPendingDeviceData(null);
     setSelectedType("keyboard"); // reset
+    setSelectedLayout(""); // reset
   };
 
   const addDevice = (profileName: string) => {
@@ -227,6 +243,25 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
                 </select>
               </label>
             </div>
+
+            {selectedType === "keyboard" && layouts.length > 0 && (
+              <div style={{ marginBottom: "20px" }}>
+                <label>
+                  Layout della tastiera:{" "}
+                  <select
+                    value={selectedLayout}
+                    onChange={(e) => setSelectedLayout(e.target.value)}
+                    style={{ padding: "5px", marginLeft: "10px" }}
+                  >
+                    {layouts.map((layout, index) => (
+                      <option key={index} value={layout.name}>
+                        {layout.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            )}
 
             <div
               style={{

@@ -7,6 +7,7 @@ import { Server } from "socket.io";
 import handleEvents from "./socket/events.js";
 import { UsbWatcher } from "./watchers/usbWatcher.js";
 import { ThemeWatcher } from "./watchers/themeWatcher.js";
+import { LayoutWatcher } from "./watchers/layoutWatcher.js";
 
 dotenv.config({
   path: "./.env",
@@ -28,6 +29,8 @@ const usbWatcher = new UsbWatcher(io);
 app.set("usbWatcher", usbWatcher);
 const themeWatcher = new ThemeWatcher();
 app.set("themeWatcher", themeWatcher);
+const layoutWatcher = new LayoutWatcher();
+app.set("layoutWatcher", layoutWatcher);
 
 const PORT = process.env.PORT || 3000;
 
@@ -36,7 +39,8 @@ app.use("/api/v1/flow", profileRouter);
 io.on("connection", (socket) => {
   console.log("a user connected");
   themeWatcher.startListening();
-  handleEvents(socket, usbWatcher, themeWatcher);
+  layoutWatcher.startListening();
+  handleEvents(socket, usbWatcher, themeWatcher, layoutWatcher);
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
