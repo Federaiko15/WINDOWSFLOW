@@ -29,10 +29,13 @@ export class LayoutWatcher {
     if (keyboars.length > 0) {
       const targetKeyboard = keyboars[0];
       console.log(
-        "Tastiera trovat nel profilo attivo. Impostiamo il layout ad: ",
+        "Tastiera trovata nel profilo attivo. Impostiamo il layout ad: ",
         targetKeyboard.layout,
       );
-      setLayout(targetKeyboard.layout.id);
+      const layoutId = targetKeyboard.layout?.id || targetKeyboard.layout;
+      if (layoutId && typeof layoutId === "string") {
+        setLayout(layoutId);
+      }
     } else {
       console.log("Nessuna tastiera trovata nel profilo attivo");
     }

@@ -17,7 +17,8 @@ export default function DeviceDetailsModal({
   const { socket, layouts } = useSocket();
   const [changeLayout, setChangeLayout] = useState<boolean>(true);
   const [selectedLayout, setSelectedLayout] = useState<string>(
-    device.layout || "",
+    (device.layout as any)?.name ||
+      (typeof device.layout === "string" ? device.layout : ""),
   );
 
   useEffect(() => {
@@ -64,7 +65,6 @@ export default function DeviceDetailsModal({
       } else {
         console.log("Layout changed");
         socket?.emit("change_layout");
-        // aggiungere adesso l'evento con la socket così che il server chiami la funzione che tramite powershell cambi il layout
       }
     } catch (error) {
       console.error("Error changing layout:", error);
@@ -95,7 +95,9 @@ export default function DeviceDetailsModal({
           </p>
           {device.type === "keyboard" && (
             <label>
-              <p>Layout corrente: {device.layout![1]}</p>
+              <p>
+                Layout corrente: {(device.layout as any)?.name || device.layout}
+              </p>
               <strong>Selezione il layout: </strong>
               <select
                 value={selectedLayout}

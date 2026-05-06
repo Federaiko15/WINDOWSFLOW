@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,25 +12,59 @@
 }
 
 .socket_modal {
-  background-color: var(--surface, #fff);
-  color: var(--text, #333);
-  padding: 30px;
-  border-radius: 12px;
-  max-width: 500px;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--win-text);
+  padding: 32px;
+  border-radius: var(--win-radius);
+  max-width: 480px;
   width: 90%;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--win-shadow);
   text-align: center;
-  border: 1px solid var(--hl-low, #eee);
+  border: 1px solid var(--win-border);
+  animation: modalScaleUp 0.15s ease-out;
 }
 
+.socket_modal h3 {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--win-text);
+}
+
+.socket_modal p {
+  font-size: 14px;
+  color: var(--win-text-secondary);
+}
+
+.socket_modal select {
+  padding: 6px 12px;
+  margin-left: 10px;
+  border: 1px solid var(--win-border);
+  border-radius: var(--win-radius-sm);
+  background-color: var(--win-surface);
+  color: var(--win-text);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  border-bottom: 2px solid var(--win-border);
+}
+
+.socket_modal select:focus {
+  border-bottom-color: var(--win-accent);
+}
+
+/* Windows 11 style spinner (Metro) */
 .listening_spinner {
-  border: 4px solid var(--hl-low, #e5e5ea);
-  border-top: 4px solid var(--pine, #34c759);
+  border: 3px solid transparent;
+  border-top: 3px solid var(--win-accent);
+  border-right: 3px solid var(--win-accent);
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 20px auto;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s cubic-bezier(0.53, 0.21, 0.29, 0.67) infinite;
+  margin: 0 auto 24px auto;
 }
 
 @keyframes spin {
@@ -43,16 +77,16 @@
 }
 
 .btn_cancel_listening {
-  margin-top: 20px;
-  background-color: var(--love, #ff3b30);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
+  margin-top: 24px;
+  background-color: var(--win-surface);
+  color: var(--win-text);
+  border: 1px solid var(--win-border);
+  padding: 6px 20px;
+  border-radius: var(--win-radius-sm);
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .btn_cancel_listening:hover {
-  background-color: #d9363e;
+  background-color: #f0f0f0;
 }

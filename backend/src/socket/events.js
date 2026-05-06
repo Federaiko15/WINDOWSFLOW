@@ -13,6 +13,7 @@ const handleEvents = (socket, usbWatcher, themeWatcher, layoutWatcher) => {
   });
   socket.on("change_active_profile", () => {
     themeWatcher.startListening();
+    layoutWatcher.startListening();
   });
   socket.on("get_layouts", async () => {
     const layouts = await getInstalledLayout();

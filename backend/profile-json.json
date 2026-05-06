@@ -14,7 +14,11 @@
         "name": "Evision AK820",
         "idVendor": 12815,
         "idProduct": 20571,
-        "type": "keyboard"
+        "type": "keyboard",
+        "layout": {
+          "id": "0410:00020409",
+          "name": "Italiano - Americano Internazionale"
+        }
       }
     ]
   },
@@ -33,8 +37,8 @@
         "isAttached": true,
         "type": "keyboard",
         "layout": {
-          "id": "0410:00000410",
-          "name": "Italiano"
+          "id": "0410:00020409",
+          "name": "Italiano - Americano Internazionale"
         }
       }
     ]
@@ -42,7 +46,19 @@
   {
     "profile_name": "Home",
     "theme": "Light",
-    "active": true,
-    "devices": []
+    "active": false,
+    "devices": [
+      {
+        "name": "Evision AK820",
+        "idVendor": 12815,
+        "idProduct": 20571,
+        "isAttached": true,
+        "type": "keyboard",
+        "layout": {
+          "id": "0410:00000410",
+          "name": "Italiano"
+        }
+      }
+    ]
   }
 ]

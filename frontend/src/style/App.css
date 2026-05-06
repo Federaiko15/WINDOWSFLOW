@@ -1,12 +1,34 @@
-/* Rosé Pine Dawn Palette */
+:root {
+  --win-bg: #f3f3f3;
+  --win-surface: #ffffff;
+  --win-surface-hover: #f9f9f9;
+  --win-border: #e5e5e5;
+  --win-text: #1a1a1a;
+  --win-text-secondary: #5c5c5c;
+  --win-accent: #005fb8;
+  --win-accent-hover: #0053a0;
+  --win-accent-text: #ffffff;
+  --win-danger: #c42b1c;
+  --win-danger-hover: #b12417;
+  --win-radius: 8px;
+  --win-radius-sm: 4px;
+  --win-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
+}
+
 body {
-  background-color: var(--base);
-  color: var(--text);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--win-bg);
+  color: var(--win-text);
+  font-family:
+    "Segoe UI Variable",
+    "Segoe UI",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   margin: 0;
   padding: 0;
   min-height: 100vh;
   padding-top: 3rem;
+  -webkit-font-smoothing: antialiased;
 }
 
 .principal-container {
@@ -17,24 +39,27 @@ body {
 }
 
 button {
-  background-color: var(--pine);
-  color: var(--surface);
-  border: none;
-  padding: 12px 18px;
-  border-radius: 8px;
+  background-color: var(--win-surface);
+  color: var(--win-text);
+  border: 1px solid var(--win-border);
+  padding: 6px 16px;
+  border-radius: var(--win-radius-sm);
   cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  transition:
-    background-color 0.2s ease-in-out,
-    transform 0.1s ease;
+  font-weight: 400;
+  font-size: 14px;
+  transition: all 0.1s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  font-family: inherit;
 }
 
 button:hover {
-  background-color: var(--foam);
+  background-color: var(--win-surface-hover);
+  border-color: #cccccc;
 }
 
 button:active {
+  background-color: #f0f0f0;
+  color: #666666;
   transform: scale(0.98);
 }
 
@@ -42,7 +67,7 @@ button:active {
   margin: 0 auto 1.5rem auto;
   display: block;
   min-width: 200px;
-  font-size: 1.1rem;
+  font-size: 14px;
 }
 
 .content-split {
@@ -59,7 +84,6 @@ button:active {
   flex: 1;
 }
 
-/* Responsive per schermi più piccoli */
 @media (max-width: 768px) {
   .content-split {
     flex-direction: column-reverse;
@@ -73,35 +97,39 @@ button:active {
 .create_profile_form {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
-  background-color: var(--overlay);
+  gap: 1rem;
+  background-color: var(--win-surface);
   padding: 1.5rem;
-  border-radius: 10px;
-  border: 1px solid var(--hl-low);
+  border-radius: var(--win-radius);
+  border: 1px solid var(--win-border);
+  box-shadow: var(--win-shadow);
 }
 
 input[type="text"],
 input[type="time"] {
-  background-color: var(--base);
-  color: var(--text);
-  border: 1px solid var(--hl-high);
-  padding: 10px 14px;
-  border-radius: 8px;
+  background-color: var(--win-surface);
+  color: var(--win-text);
+  border: 1px solid var(--win-border);
+  padding: 6px 12px;
+  border-radius: var(--win-radius-sm);
   outline: none;
-  font-size: 1rem;
+  font-size: 14px;
+  font-family: inherit;
   transition: border-color 0.2s;
+  border-bottom: 2px solid var(--win-border);
 }
 
 input[type="text"]:focus,
 input[type="time"]:focus {
-  border-color: var(--iris);
+  border-color: var(--win-border);
+  border-bottom-color: var(--win-accent);
 }
 
 input:disabled {
-  background-color: var(--hl-low);
-  color: var(--muted);
+  background-color: #f9f9f9;
+  color: #999999;
   cursor: not-allowed;
-  border-color: var(--hl-med);
+  border-color: var(--win-border);
 }
 
 .theme-selection {
@@ -113,26 +141,30 @@ input:disabled {
 .theme-selection label {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-weight: 500;
-  color: var(--subtle);
+  gap: 6px;
+  font-size: 14px;
+  color: var(--win-text);
   cursor: pointer;
 }
 
 input[type="radio"] {
-  accent-color: var(--rose);
-  width: 1.2rem;
-  height: 1.2rem;
+  accent-color: var(--win-accent);
+  width: 16px;
+  height: 16px;
   cursor: pointer;
 }
 
 .create_profile_button {
-  background-color: var(--rose);
+  background-color: var(--win-accent);
+  color: var(--win-accent-text);
+  border: none;
+  font-weight: 600;
   margin-top: 0.5rem;
 }
 
 .create_profile_button:hover {
-  background-color: var(--love);
+  background-color: var(--win-accent-hover);
+  border: none;
 }
 
 .profile_list {
@@ -140,10 +172,11 @@ input[type="radio"] {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .no-profiles {
-  color: var(--muted);
+  color: var(--win-text-secondary);
   font-style: italic;
+  font-size: 14px;
 }

@@ -102,6 +102,10 @@ const updateProfile = (req, res) => {
           );
         }
         if (active == true || active == false) {
+          if (active === true) {
+            // Spegniamo lo stato "active" su tutti gli altri profili
+            profiles.forEach((p) => (p.active = false));
+          }
           profiles[i].active = active;
         }
         if (newLayoutInfo) {

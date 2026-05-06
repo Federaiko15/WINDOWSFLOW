@@ -1,53 +1,56 @@
 .profile_card {
-  background-color: var(--overlay);
-  color: var(--text);
-  border-radius: 8px;
-  border-left: 5px solid var(--gold);
-  font-weight: 500;
-  box-shadow: 0 2px 4px var(--hl-low);
+  background-color: var(--win-surface);
+  color: var(--win-text);
+  border-radius: var(--win-radius);
+  border: 1px solid var(--win-border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
   overflow: hidden;
-  transition: box-shadow 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 4px;
 }
 
 .profile_card:hover {
-  box-shadow: 0 4px 8px var(--hl-med);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .profile_header {
   display: flex;
   align-items: center;
-  padding: 1.2rem;
+  padding: 1rem 1.2rem;
   cursor: pointer;
   user-select: none;
+  background-color: var(--win-surface);
   transition: background-color 0.2s ease;
 }
 
 .profile_header:hover {
-  background-color: var(--hl-low);
+  background-color: var(--win-surface-hover);
 }
 
 .profile_name {
   margin: 0;
-  font-size: 1.2rem;
-  color: var(--pine);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--win-text);
 }
 
 .toggle_icon {
-  font-size: 0.9rem;
-  color: var(--subtle);
+  font-size: 12px;
+  color: var(--win-text-secondary);
   margin-left: 12px;
 }
 
 .profile_details {
   padding: 0 1.2rem 1.2rem 1.2rem;
-  border-top: 1px solid var(--hl-low);
-  animation: fadeInDown 0.3s ease-in-out;
+  background-color: var(--win-surface);
+  border-top: 1px solid var(--win-border);
+  animation: fadeInDown 0.2s ease-in-out;
 }
 
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translateY(-4px);
   }
   to {
     opacity: 1;
@@ -58,29 +61,34 @@
 .current_theme,
 .active_status {
   margin: 0.5rem 0;
-  color: var(--subtle);
+  font-size: 13px;
+  color: var(--win-text-secondary);
 }
 
 .profile_actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin: 1rem 0;
 }
 
 .btn_delete_profile {
-  background-color: var(--love);
+  background-color: var(--win-danger);
+  color: #fff;
+  border: none;
 }
 
 .btn_delete_profile:hover {
-  background-color: var(--rose);
+  background-color: var(--win-danger-hover);
 }
 
 .btn_add_device {
-  background-color: var(--foam);
+  background-color: var(--win-surface);
+  border: 1px solid var(--win-border);
+  color: var(--win-text);
 }
 
 .btn_add_device:hover {
-  background-color: var(--pine);
+  background-color: var(--win-surface-hover);
 }
 
 .device_list {
@@ -89,80 +97,92 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .device_item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--base);
-  padding: 0.8rem;
-  border-radius: 6px;
-  border: 1px solid var(--hl-low);
-  cursor: pointer;
+  background-color: #fafafa;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--win-radius-sm);
+  border: 1px solid var(--win-border);
+  font-size: 13px;
 }
 
 .device_item:hover {
-  background-color: var(--hl-low);
+  background-color: #f0f0f0;
 }
 
 .device_info {
-  font-size: 0.95rem;
-  color: var(--text);
+  color: var(--win-text);
+  font-weight: 500;
 }
 
 .device_info small {
-  color: var(--muted);
+  color: var(--win-text-secondary);
   font-weight: normal;
+  display: block;
+  margin-top: 2px;
 }
 
 .btn_delete_device {
-  background-color: var(--hl-high);
-  color: var(--text);
-  padding: 6px 10px;
-  font-size: 0.85rem;
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: var(--win-danger);
+  padding: 4px 8px;
+  font-size: 12px;
 }
 
 .btn_delete_device:hover {
-  background-color: var(--love);
-  color: var(--surface);
+  background-color: #fde7e9;
+  border-color: #fde7e9;
+  color: var(--win-danger-hover);
 }
 
+/* Windows 11 Toggle Switch */
 .toggle_switch {
   position: relative;
-  width: 50px;
-  height: 30px;
-  border-radius: 30px;
-  background-color: #e5e5ea;
-  border: none;
+  width: 40px;
+  height: 20px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  border: 1px solid var(--win-text-secondary);
   cursor: pointer;
   outline: none;
   padding: 0;
-  transition: background-color 0.3s ease-in-out;
-  flex-shrink: 0; /* Evita che si rimpicciolisca se il nome del profilo è lungo */
+  transition: all 0.2s ease-in-out;
+  flex-shrink: 0;
   margin-left: auto;
 }
 
-/* Colore verde quando il toggle è ON */
-.toggle_switch.on {
-  background-color: #34c759;
+.toggle_switch:hover {
+  background-color: #f3f3f3;
 }
 
-/* Pallino bianco interno al toggle */
+.toggle_switch.on {
+  background-color: var(--win-accent);
+  border-color: var(--win-accent);
+}
+
+.toggle_switch.on:hover {
+  background-color: var(--win-accent-hover);
+  border-color: var(--win-accent-hover);
+}
+
 .toggle_slider {
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 26px;
-  height: 26px;
-  background-color: white;
+  width: 14px;
+  height: 14px;
+  background-color: var(--win-text-secondary);
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
-/* Spostamento del pallino a destra quando ON */
 .toggle_switch.on .toggle_slider {
+  background-color: #ffffff;
   transform: translateX(20px);
 }

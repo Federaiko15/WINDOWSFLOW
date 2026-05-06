@@ -99,7 +99,10 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       const deviceWithType = {
         ...pendingDeviceData.newDevice,
         type: selectedType,
-        layout: selectedType === "keyboard" ? selectedLayout : undefined,
+        layout:
+          selectedType === "keyboard"
+            ? layouts.find((l) => l.name === selectedLayout)
+            : undefined,
       };
 
       const response = await fetch(
