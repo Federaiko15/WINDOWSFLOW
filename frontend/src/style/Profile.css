@@ -186,3 +186,163 @@
   background-color: #ffffff;
   transform: translateX(20px);
 }
+
+/* Delete Profile Modal Styles */
+.delete_profile_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.delete_profile_modal {
+  background-color: var(--win-surface, #ffffff);
+  color: var(--win-text, #333);
+  padding: 24px;
+  border-radius: var(--win-radius, 8px);
+  border: 1px solid var(--win-border, #ccc);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.delete_profile_title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.delete_profile_buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn_delete_profile_confirm {
+  background-color: var(--win-danger, #d13438);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--win-radius-sm, 4px);
+  cursor: pointer;
+}
+
+.btn_delete_profile_confirm:hover {
+  background-color: var(--win-danger-hover, #a82a2d);
+}
+
+.btn_cancel_delete {
+  background-color: transparent;
+  border: 1px solid var(--win-border, #ccc);
+  padding: 8px 16px;
+  border-radius: var(--win-radius-sm, 4px);
+  cursor: pointer;
+  color: var(--win-text, #333);
+}
+
+.btn_cancel_delete:hover {
+  background-color: #f0f0f0;
+}
+
+/* Edit Theme Modal Styles */
+.edit_theme_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.edit_theme_modal {
+  background-color: var(--win-surface, #ffffff);
+  color: var(--win-text, #333);
+  padding: 24px;
+  border-radius: var(--win-radius, 8px);
+  border: 1px solid var(--win-border, #ccc);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+}
+
+.edit_theme_modal h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.edit_theme_form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.edit_theme_selection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit_theme_selection label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.edit_theme_selection input[type="text"],
+.edit_theme_selection input[type="time"] {
+  padding: 8px 12px;
+  border: 1px solid var(--win-border, #ccc);
+  border-radius: var(--win-radius-sm, 4px);
+}
+
+.edit_theme_selection input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.edit_theme_buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.btn_save_theme,
+.btn_cancel_theme {
+  padding: 8px 16px;
+  border-radius: var(--win-radius-sm, 4px);
+  cursor: pointer;
+  border: 1px solid var(--win-border, #ccc);
+}
+
+.btn_save_theme {
+  background-color: var(--win-accent, #0078d4);
+  color: #fff;
+  border: none;
+}
+
+.btn_save_theme:hover {
+  background-color: var(--win-accent-hover, #005a9e);
+}
+
+.btn_cancel_theme {
+  background-color: transparent;
+}
+
+.btn_cancel_theme:hover {
+  background-color: #f0f0f0;
+}

@@ -9,7 +9,7 @@ export interface Device {
 
 export interface Profile {
   profile_name: string;
-  theme: string;
+  theme: string | DinamicTheme;
   active: boolean;
   devices: Device[];
 }
@@ -29,4 +29,9 @@ export interface ChangeLayoutResponse {
   idProduct: number;
   selectedLayout: string;
   profileName: string;
+}
+
+export interface DinamicTheme {
+  startLight: string;
+  startDark: string;
 }

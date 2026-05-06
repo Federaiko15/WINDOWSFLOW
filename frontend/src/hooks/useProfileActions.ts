@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSocket } from "../SocketContext";
-import type { Device } from "../type";
+import type { Device, DinamicTheme } from "../type";
 
 export function useProfileActions(
   profileName: string,
@@ -26,7 +26,7 @@ export function useProfileActions(
 
     try {
       const response = await fetch(
-        `http://localhost:4000/api/v1/flow/profiles/${profileName}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/flow/profiles/${profileName}`,
         {
           method: "PUT",
           headers: {
@@ -62,7 +62,7 @@ export function useProfileActions(
     emitRemoveDevice(profileName);
     try {
       const response = await fetch(
-        `http://localhost:4000/api/v1/flow/profiles/${profileName}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/flow/profiles/${profileName}`,
         {
           method: "PUT",
           headers: {
@@ -87,7 +87,7 @@ export function useProfileActions(
   const deleteProfile = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/v1/flow/profiles/${profileName}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/flow/profiles/${profileName}`,
         { method: "DELETE" },
       );
       if (!response.ok) {
@@ -101,11 +101,39 @@ export function useProfileActions(
     }
   };
 
+  const changeProfileTheme = async (profileTheme: string | DinamicTheme) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/flow/profiles/${profileName}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            theme: profileTheme,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        console.log("Error changing profile theme");
+        return;
+      } else {
+        console.log("Profile theme changed");
+        getProfiles();
+      }
+    } catch (error) {
+      console.error("Server Error changing profile theme:", error);
+    }
+  };
+
   return {
     isActive,
     toggleActive,
     addDevice,
     deleteDevice,
     deleteProfile,
+    changeProfileTheme,
   };
 }

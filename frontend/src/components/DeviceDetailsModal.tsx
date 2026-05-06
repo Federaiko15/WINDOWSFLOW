@@ -14,9 +14,13 @@ export default function DeviceDetailsModal({
   onClose,
   profileName,
 }: DeviceDetailsModalProps) {
-  const { socket, layouts } = useSocket();
+  const { socket, layouts, getProfiles } = useSocket();
   const [changeLayout, setChangeLayout] = useState<boolean>(true);
   const [selectedLayout, setSelectedLayout] = useState<string>(
+    (device.layout as any)?.name ||
+      (typeof device.layout === "string" ? device.layout : ""),
+  );
+  const [currentLayoutDisplay, setCurrentLayoutDisplay] = useState<string>(
     (device.layout as any)?.name ||
       (typeof device.layout === "string" ? device.layout : ""),
   );
@@ -44,7 +48,7 @@ export default function DeviceDetailsModal({
       const fullLayout = layouts.find((l) => l.name === selectedLayout);
 
       const response = await fetch(
-        `http://localhost:4000/api/v1/flow/profiles/${profileName}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/flow/profiles/${profileName}`,
         {
           method: "PUT",
           headers: {
@@ -64,7 +68,9 @@ export default function DeviceDetailsModal({
         console.log("Error changing layout response");
       } else {
         console.log("Layout changed");
+        setCurrentLayoutDisplay(fullLayout?.name || selectedLayout);
         socket?.emit("change_layout");
+        getProfiles(); // Aggiorniamo i dati globali affinché il layout si persista
       }
     } catch (error) {
       console.error("Error changing layout:", error);
@@ -95,9 +101,7 @@ export default function DeviceDetailsModal({
           </p>
           {device.type === "keyboard" && (
             <label>
-              <p>
-                Layout corrente: {(device.layout as any)?.name || device.layout}
-              </p>
+              <p>Layout corrente: {currentLayoutDisplay}</p>
               <strong>Selezione il layout: </strong>
               <select
                 value={selectedLayout}

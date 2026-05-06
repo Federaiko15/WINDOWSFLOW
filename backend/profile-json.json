@@ -46,7 +46,7 @@
   {
     "profile_name": "Home",
     "theme": "Light",
-    "active": false,
+    "active": true,
     "devices": [
       {
         "name": "Evision AK820",
