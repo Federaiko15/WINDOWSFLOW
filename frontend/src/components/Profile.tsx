@@ -121,6 +121,9 @@ export default function Profile({ profile }: { profile: Profile }) {
                 onClick={() => setSelectedDevice(device)}
               >
                 <span className="device_info">
+                  <span title={device.isConnected ? "Connesso" : "Scollegato"}>
+                    {device.isConnected ? "🟢 " : "🔴 "}
+                  </span>
                   {device.name} <small>({device.type})</small>
                 </span>
                 <button

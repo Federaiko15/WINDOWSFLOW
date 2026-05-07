@@ -194,9 +194,28 @@ const getProfiles = (req, res) => {
     }
     const profiles = JSON.parse(fs.readFileSync("profile-json.json", "utf8"));
 
+    // Recuperiamo il watcher da Express
+    const usbWatcher = req.app.get("usbWatcher");
+    const liveDevices = usbWatcher ? usbWatcher.devices : [];
+
+    // Arricchiamo i device con lo stato di connessione in tempo reale
+    const enrichedProfiles = profiles.map((profile) => {
+      if (profile.devices && Array.isArray(profile.devices)) {
+        profile.devices = profile.devices.map((device) => {
+          const isConnected = liveDevices.some(
+            (liveD) =>
+              liveD.idVendor === device.idVendor &&
+              liveD.idProduct === device.idProduct,
+          );
+          return { ...device, isConnected };
+        });
+      }
+      return profile;
+    });
+
     res.status(200).json({
       message: "OK, HERE ALL YOUR PROFILES",
-      data: profiles,
+      data: enrichedProfiles,
     });
   } catch (error) {
     return res.status(500).json({

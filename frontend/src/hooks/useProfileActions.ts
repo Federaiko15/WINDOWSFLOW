@@ -8,7 +8,6 @@ export function useProfileActions(
 ) {
   const {
     addDevice: emitAddDevice,
-    removeDevice: emitRemoveDevice,
     getProfiles,
   } = useSocket();
   const [isActive, setIsActive] = useState(initialActiveState);
@@ -59,7 +58,6 @@ export function useProfileActions(
   };
 
   const deleteDevice = async (device: Device) => {
-    emitRemoveDevice(profileName);
     try {
       const response = await fetch(
         `${import.meta.env.VITE_SERVER_URL}/api/v1/flow/profiles/${profileName}`,

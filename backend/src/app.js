@@ -29,8 +29,16 @@ const usbWatcher = new UsbWatcher(io);
 app.set("usbWatcher", usbWatcher);
 const themeWatcher = new ThemeWatcher();
 app.set("themeWatcher", themeWatcher);
-const layoutWatcher = new LayoutWatcher();
+const layoutWatcher = new LayoutWatcher(usbWatcher);
 app.set("layoutWatcher", layoutWatcher);
+
+// Inneschiamo la rivalutazione del layout automaticamente ad ogni cambio hardware!
+usbWatcher.on("hardware_change", () => {
+  console.log(
+    "Cambiamento hardware rilevato: verifico se serve cambiare layout...",
+  );
+  layoutWatcher.startListening();
+});
 
 const PORT = process.env.PORT || 3000;
 
@@ -49,3 +57,5 @@ io.on("connection", (socket) => {
 httpServer.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+export default app;

@@ -1,17 +1,19 @@
 import { usb, getDeviceList } from "usb";
 import getDeviceName from "../services/getDeviceName.js";
+import { EventEmitter } from "events";
 
-export class UsbWatcher {
+export class UsbWatcher extends EventEmitter {
   constructor(io) {
+    super();
     this.io = io;
 
-    this.isListening = false;
     this.devices = [];
     this.currentProfile = "";
-    this.initDevices(); // Chiamiamo un metodo per gestire il recupero asincrono dei nomi
+    this.associationMode = false;
+    this.startGlobalWatcher();
   }
 
-  async initDevices() {
+  async startGlobalWatcher() {
     const list = getDeviceList();
     this.devices = await Promise.all(
       list.map(async (device) => ({
@@ -21,16 +23,9 @@ export class UsbWatcher {
         isAttached: true,
       })),
     );
-  }
 
-  startListening(profileName) {
-    this.currentProfile = profileName;
-    if (this.isListening) {
-      return;
-    }
-    this.isListening = true;
     console.log(
-      "UsbWatcher in ascolto di collegamenti o scollegamenti di periferiche usb\n",
+      "UsbWatcher Globale avviato e in ascolto permanente di periferiche usb\n",
     );
 
     usb.on("attach", async (device) => {
@@ -43,60 +38,82 @@ export class UsbWatcher {
           device.idVendor === idVendor && device.idProduct === idProduct,
       );
       if (existingDevice) {
-        existingDevice.isAttached = true;
-        this.io.emit("device_added", {
-          message: `Device already attached: ${name}`,
-          newDevice: existingDevice,
-          profileName: this.currentProfile,
-        });
-        this.stopListening();
-        return;
+        if (this.associationMode) {
+          this.io.emit("device_added", {
+            message: `Device already attached: ${name}`,
+            newDevice: existingDevice,
+            profileName: this.currentProfile,
+          });
+          this.associationMode = false;
+        } else {
+          // Se viene collegata una periferica nota ma non stiamo associando nulla, notifichiamo un cambio hardware
+          this.emit("hardware_change");
+          this.io.emit("device_status_changed");
+        }
+      } else {
+        console.log(
+          "Informazioni nuova periferica: ",
+          name,
+          idVendor,
+          idProduct,
+        );
+
+        const newDevice = {
+          name,
+          idVendor,
+          idProduct,
+          isAttached: true,
+        };
+        this.devices.push(newDevice);
+        if (this.associationMode) {
+          this.io.emit("device_added", {
+            message: `New device attached: ${name}`,
+            newDevice,
+            profileName: this.currentProfile,
+          });
+          this.associationMode = false;
+        } else {
+          // Nuova periferica collegata fuori dalla modalità associazione
+          this.emit("hardware_change");
+          this.io.emit("device_status_changed");
+        }
       }
-      console.log("Informazioni nuova periferica: ", name, idVendor, idProduct);
-
-      const newDevice = {
-        name,
-        idVendor,
-        idProduct,
-      };
-      this.devices.push(newDevice);
-
-      this.io.emit("device_added", {
-        message: `New device attached: ${name}`,
-        newDevice,
-        profileName: this.currentProfile,
-      });
-      console.log("UsbWatcher ha terminato la sessione di ascolto");
-      this.stopListening();
     });
+
     usb.on("detach", async (device) => {
       const name = await getDeviceName(device);
-      const existingDevice = this.devices.find(
-        (d) =>
-          d.idVendor === device.deviceDescriptor.idVendor &&
-          d.idProduct === device.deviceDescriptor.idProduct,
-      );
-      console.log(
-        "Periferica rintracciata per scollegamento: ",
-        existingDevice,
-      );
-      if (existingDevice) {
-        this.devices = this.devices.filter((device) => device.name != name);
-        this.io.emit("device_removed", {
-          message: `Device detached from profile ${this.currentProfile}: ${existingDevice}`,
-        });
-      }
+      const { idVendor, idProduct } = device.deviceDescriptor;
+
       console.log("Periferica rimossa: ", name);
-      this.stopListening();
+
+      // Rimuoviamo il device dalla memoria usando gli ID (più sicuro del nome)
+      this.devices = this.devices.filter(
+        (d) => !(d.idVendor === idVendor && d.idProduct === idProduct),
+      );
+
+      this.io.emit("device_removed", {
+        message: `Device detached: ${name}`,
+      });
+
+      // Notifichiamo il cambio hardware per far ricalcolare layout
+      this.emit("hardware_change");
+      this.io.emit("device_status_changed");
     });
   }
 
-  stopListening() {
-    if (!this.isListening) {
-      return;
-    }
-    this.isListening = false;
-    usb.removeAllListeners("attach");
-    usb.removeAllListeners("detach");
+  enableAssociationMode(profileName) {
+    this.associationMode = true;
+    this.currentProfile = profileName;
+    console.log("Modalità associazione attivata per il profilo: ", profileName);
+  }
+
+  cancelAssociationMode() {
+    this.associationMode = false;
+    this.currentProfile = "";
+    console.log("Modalità associazione disattivata");
+  }
+
+  connectedDevices() {
+    return this.devices;
   }
 }

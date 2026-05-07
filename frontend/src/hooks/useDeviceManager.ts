@@ -109,14 +109,6 @@ export function useDeviceManager(
     socket?.emit("add_device", profileName);
   };
 
-  const removeDevice = (profileName: string) => {
-    console.log(
-      "Mandata richiesta di delete device per il profilo",
-      profileName,
-    );
-    socket?.emit("remove_device", profileName);
-  };
-
   const handleCancelListening = () => {
     setIsSearchingDevices(false);
     socket?.emit("stop_listening");
@@ -130,7 +122,6 @@ export function useDeviceManager(
     selectedLayout,
     setSelectedLayout,
     addDevice,
-    removeDevice,
     handleConfirmAddDevice,
     handleCancelAddDevice,
     handleCancelListening,

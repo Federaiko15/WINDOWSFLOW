@@ -2,14 +2,10 @@ import { getInstalledLayout } from "../services/layoutSetter.js";
 
 const handleEvents = (socket, usbWatcher, themeWatcher, layoutWatcher) => {
   socket.on("add_device", (profileName) => {
-    usbWatcher.startListening(profileName);
-  });
-  socket.on("remove_device", (profileName) => {
-    usbWatcher.startListening(profileName);
+    usbWatcher.enableAssociationMode(profileName);
   });
   socket.on("stop_listening", () => {
-    usbWatcher.stopListening();
-    console.log("Stopped listening for devices");
+    usbWatcher.cancelAssociationMode();
   });
   socket.on("change_active_profile", () => {
     themeWatcher.startListening();
@@ -23,7 +19,7 @@ const handleEvents = (socket, usbWatcher, themeWatcher, layoutWatcher) => {
     layoutWatcher.startListening();
   });
   socket.on("disconnect", () => {
-    usbWatcher.stopListening();
+    usbWatcher.cancelAssociationMode();
   });
 };
 

@@ -5,6 +5,7 @@ export interface Device {
   isAttached: boolean;
   type: string;
   layout: string | undefined;
+  isConnected: boolean;
 }
 
 export interface Profile {

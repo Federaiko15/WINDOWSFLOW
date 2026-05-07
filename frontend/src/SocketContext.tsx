@@ -7,7 +7,6 @@ import { useDeviceManager } from "./hooks/useDeviceManager";
 interface SocketContextType {
   socket: Socket | undefined;
   addDevice: (profileName: string) => void;
-  removeDevice: (profileName: string) => void;
   getProfiles: () => void;
   profiles: Profile[];
   layouts: Layouts[];
@@ -16,7 +15,6 @@ interface SocketContextType {
 const SocketContext = createContext<SocketContextType>({
   socket: undefined,
   addDevice: () => {},
-  removeDevice: () => {},
   getProfiles: async () => {},
   profiles: [],
   layouts: [],
@@ -43,6 +41,13 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     newSocket.on("layouts", (data: Layouts[]) => {
       console.log("Received layouts:", data);
       setLayouts(data);
+    });
+
+    newSocket.on("device_status_changed", () => {
+      console.log(
+        "Cambiamento hardware rilevato: aggiorno la lista dei profili",
+      );
+      getProfiles();
     });
 
     // Cleanup alla disconnessione del componente
@@ -77,7 +82,6 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     selectedLayout,
     setSelectedLayout,
     addDevice,
-    removeDevice,
     handleConfirmAddDevice,
     handleCancelAddDevice,
     handleCancelListening,
@@ -88,7 +92,6 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         socket,
         addDevice,
-        removeDevice,
         getProfiles,
         profiles,
         layouts,

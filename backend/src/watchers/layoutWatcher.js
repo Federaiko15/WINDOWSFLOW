@@ -2,7 +2,8 @@ import fs from "fs";
 import { setLayout } from "../services/layoutSetter.js";
 
 export class LayoutWatcher {
-  constructor() {
+  constructor(usbWatcher) {
+    this.usbWatcher = usbWatcher;
     this.isListening = false;
   }
   startListening() {
@@ -23,18 +24,30 @@ export class LayoutWatcher {
       return;
     }
 
-    const keyboars =
+    const keyboards =
       active_profile.devices?.filter((device) => device.type == "keyboard") ||
       [];
-    if (keyboars.length > 0) {
-      const targetKeyboard = keyboars[0];
+    if (keyboards.length > 0) {
+      const targetKeyboard = keyboards[0];
       console.log(
         "Tastiera trovata nel profilo attivo. Impostiamo il layout ad: ",
         targetKeyboard.layout,
       );
-      const layoutId = targetKeyboard.layout?.id || targetKeyboard.layout;
-      if (layoutId && typeof layoutId === "string") {
-        setLayout(layoutId);
+      const devices = this.usbWatcher.connectedDevices();
+      if (
+        devices.length > 0 &&
+        devices.find(
+          (device) =>
+            device.idVendor === targetKeyboard.idVendor &&
+            device.idProduct === targetKeyboard.idProduct,
+        )
+      ) {
+        const layoutId = targetKeyboard.layout?.id || targetKeyboard.layout;
+        if (layoutId && typeof layoutId === "string") {
+          setLayout(layoutId);
+        }
+      } else {
+        console.log("Tastiera non collegata o non trovata nel profilo attivo");
       }
     } else {
       console.log("Nessuna tastiera trovata nel profilo attivo");
