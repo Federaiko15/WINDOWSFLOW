@@ -5,9 +5,6 @@ import { fileURLToPath } from "url";
 // Diciamo a Node di usare la cartella sicura di Windows (AppData) per salvare i file
 process.env.USER_DATA_PATH = app.getPath("userData");
 
-// Avvia il tuo server backend (Express + Socket.io) in background
-import "./src/app.js";
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -26,7 +23,9 @@ function createWindow() {
   // win.webContents.openDevTools();
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  // Avvia il server backend in modo "dinamico", DOPO aver settato il percorso
+  await import("./src/app.js");
   createWindow();
 });
 

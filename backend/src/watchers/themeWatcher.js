@@ -35,6 +35,7 @@ export class ThemeWatcher {
     }
     if (!isAProfileActive) {
       console.log("Nessun profilo attivo trovato");
+      this.isListening = false;
       return;
     }
     console.log("Tema del Profilo Attivo: ", this.currentTheme);
