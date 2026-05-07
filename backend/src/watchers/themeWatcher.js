@@ -1,5 +1,10 @@
 import themeSetter from "../services/themeSetter.js";
 import fs from "fs";
+import path from "path";
+
+const dataFilePath = process.env.USER_DATA_PATH
+  ? path.join(process.env.USER_DATA_PATH, "profile-json.json")
+  : "profile-json.json";
 
 export class ThemeWatcher {
   constructor() {
@@ -15,8 +20,8 @@ export class ThemeWatcher {
     console.log("Theme Watcher attivato per il cambio di tema");
 
     let profiles = [];
-    if (fs.existsSync("profile-json.json")) {
-      const fileData = fs.readFileSync("profile-json.json", "utf8");
+    if (fs.existsSync(dataFilePath)) {
+      const fileData = fs.readFileSync(dataFilePath, "utf8");
       if (fileData) profiles = JSON.parse(fileData);
     }
     let isAProfileActive = false;

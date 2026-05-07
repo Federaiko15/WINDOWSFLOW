@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import profileRouter from "./routes/profiles.route.js";
 import dotenv from "dotenv";
 import { createServer } from "http";
@@ -9,8 +11,11 @@ import { UsbWatcher } from "./watchers/usbWatcher.js";
 import { ThemeWatcher } from "./watchers/themeWatcher.js";
 import { LayoutWatcher } from "./watchers/layoutWatcher.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 dotenv.config({
-  path: "./.env",
+  path: path.join(__dirname, "../.env"),
 });
 
 const app = express();
@@ -20,7 +25,7 @@ app.use(express.json());
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: `${process.env.CLIENT_URL}`,
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
   },
 });
@@ -40,9 +45,17 @@ usbWatcher.on("hardware_change", () => {
   layoutWatcher.startListening();
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 app.use("/api/v1/flow", profileRouter);
+
+// Servi i file statici del frontend compilato
+app.use(express.static(path.join(__dirname, "../public")));
+
+// Fallback per React Router
+app.get("*catchall", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
+});
 
 io.on("connection", (socket) => {
   console.log("a user connected");

@@ -1,4 +1,9 @@
 import fs from "fs";
+import path from "path";
+
+const dataFilePath = process.env.USER_DATA_PATH
+  ? path.join(process.env.USER_DATA_PATH, "profile-json.json")
+  : "profile-json.json";
 
 const createProfile = (req, res) => {
   try {
@@ -25,8 +30,8 @@ const createProfile = (req, res) => {
     }
 
     let profiles = [];
-    if (fs.existsSync("profile-json.json")) {
-      const fileData = fs.readFileSync("profile-json.json", "utf8");
+    if (fs.existsSync(dataFilePath)) {
+      const fileData = fs.readFileSync(dataFilePath, "utf8");
       if (fileData) profiles = JSON.parse(fileData);
     }
 
@@ -38,7 +43,7 @@ const createProfile = (req, res) => {
     }; // create a new class with the informations passed by the user
 
     profiles.push(newProfile);
-    fs.writeFileSync("profile-json.json", JSON.stringify(profiles, null, 2));
+    fs.writeFileSync(dataFilePath, JSON.stringify(profiles, null, 2));
 
     console.log("È stato creato un nuovo profilo:", newProfile);
 
@@ -71,14 +76,14 @@ const updateProfile = (req, res) => {
       });
     }
 
-    if (!fs.existsSync("profile-json.json")) {
+    if (!fs.existsSync(dataFilePath)) {
       console.log("UPDATE PROFILE API: PROFILES FILE NOT FOUND");
       return res.status(404).json({
         message: "PROFILES FILE NOT FOUND",
       });
     }
 
-    let profiles = JSON.parse(fs.readFileSync("profile-json.json", "utf8"));
+    let profiles = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
     if (profiles.length == 0) {
       console.log("UPDATE PROFILE API: NO PROFILES");
       return res.status(404).json({
@@ -127,7 +132,14 @@ const updateProfile = (req, res) => {
         message: "PROFILE NOT FOUND",
       });
     }
-    fs.writeFileSync("profile-json.json", JSON.stringify(profiles, null, 2));
+    fs.writeFileSync(dataFilePath, JSON.stringify(profiles, null, 2));
+
+    // Avvisiamo i watcher che ci sono state modifiche (es. periferica aggiunta o profilo attivato)
+    const themeWatcher = req.app.get("themeWatcher");
+    const layoutWatcher = req.app.get("layoutWatcher");
+    if (themeWatcher) themeWatcher.startListening();
+    if (layoutWatcher) layoutWatcher.startListening();
+
     res.status(200).json({
       message: "OK",
       data: profiles,
@@ -149,13 +161,13 @@ const deleteProfile = (req, res) => {
       });
     }
 
-    if (!fs.existsSync("profile-json.json")) {
+    if (!fs.existsSync(dataFilePath)) {
       return res.status(404).json({
         message: "PROFILES FILE NOT FOUND",
       });
     }
 
-    const profiles = JSON.parse(fs.readFileSync("profile-json.json", "utf8"));
+    const profiles = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
     if (profiles.length == 0) {
       return res.status(404).json({
         message: "PROFILES MISSED",
@@ -174,7 +186,7 @@ const deleteProfile = (req, res) => {
         message: "PROFILE NOT FOUND",
       });
     }
-    fs.writeFileSync("profile-json.json", JSON.stringify(profiles, null, 2));
+    fs.writeFileSync(dataFilePath, JSON.stringify(profiles, null, 2));
     res.status(200).json({
       message: "PROFILE DELETED SUCCESSFULLY",
     });
@@ -187,12 +199,11 @@ const deleteProfile = (req, res) => {
 
 const getProfiles = (req, res) => {
   try {
-    if (!fs.existsSync("profile-json.json")) {
-      return res.status(404).json({
-        message: "PROFILES FILE NOT FOUND",
-      });
+    let profiles = [];
+    if (fs.existsSync(dataFilePath)) {
+      const fileData = fs.readFileSync(dataFilePath, "utf8");
+      if (fileData) profiles = JSON.parse(fileData);
     }
-    const profiles = JSON.parse(fs.readFileSync("profile-json.json", "utf8"));
 
     // Recuperiamo il watcher da Express
     const usbWatcher = req.app.get("usbWatcher");

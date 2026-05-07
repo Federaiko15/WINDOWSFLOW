@@ -1,5 +1,10 @@
 import fs from "fs";
+import path from "path";
 import { setLayout } from "../services/layoutSetter.js";
+
+const dataFilePath = process.env.USER_DATA_PATH
+  ? path.join(process.env.USER_DATA_PATH, "profile-json.json")
+  : "profile-json.json";
 
 export class LayoutWatcher {
   constructor(usbWatcher) {
@@ -13,8 +18,8 @@ export class LayoutWatcher {
     this.isListening = true;
     console.log("Layout Watcher attivato per il cambio di layout");
     let profiles = [];
-    if (fs.existsSync("profile-json.json")) {
-      const fileData = fs.readFileSync("profile-json.json", "utf8");
+    if (fs.existsSync(dataFilePath)) {
+      const fileData = fs.readFileSync(dataFilePath, "utf8");
       if (fileData) profiles = JSON.parse(fileData);
     }
     const active_profile = profiles.find((profile) => profile.active == true);

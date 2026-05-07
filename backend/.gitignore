@@ -142,3 +142,8 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node
+
+# --- File e Cartelle specifiche della nostra App ---
+dist-electron/
+public/
+profile-json.json

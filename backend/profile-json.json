@@ -16,8 +16,8 @@
         "idProduct": 20571,
         "type": "keyboard",
         "layout": {
-          "id": "0410:00020409",
-          "name": "Italiano - Americano Internazionale"
+          "id": "0410:00000410",
+          "name": "Italiano"
         }
       }
     ]
@@ -46,7 +46,7 @@
   {
     "profile_name": "Home",
     "theme": "Light",
-    "active": true,
+    "active": false,
     "devices": [
       {
         "name": "Evision AK820",
