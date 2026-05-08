@@ -27,6 +27,12 @@ app.whenReady().then(async () => {
   // Avvia il server backend in modo "dinamico", DOPO aver settato il percorso
   await import("./src/app.js");
   createWindow();
+
+  // Imposta l'avvio automatico all'accensione di Windows
+  app.setLoginItemSettings({
+    openAtLogin: true,
+    path: app.getPath("exe"),
+  });
 });
 
 app.on("window-all-closed", () => {
