@@ -68,7 +68,7 @@ Remove profiles you no longer need directly from the management panel.
 ### For Users
 
 1. Go to the [**Releases**](https://github.com/Federaiko15/WINDOWSFLOW/releases) section.
-2. Download the latest **`WindowsFlow.Setup.1.0.0.exe`**.
+2. Download the latest **`WindowsFlow.Setup.X.X.X.exe`**.
 3. Run the installer and follow the on-screen instructions.
 
 ### For Developers (Local Setup)
