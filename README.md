@@ -35,25 +35,25 @@ WindowsFlow is built using a modern, robust architecture to ensure performance a
 
 Set up a profile in seconds by defining its name and base theme settings.
 
-<video src="https://github.com/Federaiko15/WINDOWSFLOW/trees/main/assets/profile-creation.mp4" width="100%" autoplay loop muted playsinline></video>
+<video src="https://github.com/Federaiko15/WINDOWSFLOW/tree/main/assets/profile-creation.mp4" width="100%" autoplay loop muted playsinline></video>
 
 ### 2. Setting up Dynamic Themes
 
 Schedule your system's appearance to change automatically throughout the day.
 
-<video src="https://github.com/Federaiko15/WINDOWSFLOW/main/trees/assets/change-theme.mp4" width="100%" autoplay loop muted playsinline></video>
+<video src="https://github.com/Federaiko15/WINDOWSFLOW/tree/main/assets/change-theme.mp4" width="100%" autoplay loop muted playsinline></video>
 
 ### 3. Adding USB Peripherals
 
 Make your profiles "hardware-aware" by linking them to specific USB devices.
 
-<video src="https://github.com/Federaiko15/WINDOWSFLOW/trees/main/assets/usb-watcher.mp4" width="100%" autoplay loop muted playsinline></video>
+<video src="https://github.com/Federaiko15/WINDOWSFLOW/tree/main/assets/usb-watcher.mp4" width="100%" autoplay loop muted playsinline></video>
 
 ### 4. Profile Management & Editing
 
 Easily toggle between active profiles or modify existing settings on the fly.
 
-<video src="https://github.com/Federaiko15/WINDOWSFLOW/trees/main/assets/change-profile-status.mp4" width="100%" autoplay loop muted playsinline></video>
+<video src="https://github.com/Federaiko15/WINDOWSFLOW/tree/main/assets/change-profile-status.mp4" width="100%" autoplay loop muted playsinline></video>
 
 ---
 
