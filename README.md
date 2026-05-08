@@ -35,39 +35,31 @@ WindowsFlow is built using a modern, robust architecture to ensure performance a
 
 Set up a profile in seconds by defining its name and base theme settings.
 
-![Creating a New Profile](<img width="800" height="478" alt="Image" src="https://github.com/user-attachments/assets/5c15847c-f8fd-4355-8ccc-9fcd0c81e352" />)
+![Creating a New Profile](https://github.com/user-attachments/assets/5c15847c-f8fd-4355-8ccc-9fcd0c81e352)
 
 ### 2. Setting up Dynamic Themes
 
 Schedule your system's appearance to change automatically throughout the day.
 
-<!-- Sostituisci con il link GitHub della tua GIF: assets/change-theme.gif -->
-
-![Setting up Dynamic Themes](<img width="800" height="480" alt="Image" src="https://github.com/user-attachments/assets/78a1c636-ecba-4c02-b5c8-1134330260a3" />)
+![Setting up Dynamic Themes](https://github.com/user-attachments/assets/78a1c636-ecba-4c02-b5c8-1134330260a3)
 
 ### 3. Adding USB Peripherals
 
 Make your profiles "hardware-aware" by linking them to specific USB devices.
 
-<!-- Sostituisci con il link GitHub della tua GIF: assets/usb-watcher.gif -->
-
-![Adding USB Peripherals](<img width="800" height="478" alt="Image" src="https://github.com/user-attachments/assets/026df7a3-705a-413c-ab53-f61ffffa76f9" />)
+![Adding USB Peripherals](https://github.com/user-attachments/assets/026df7a3-705a-413c-ab53-f61ffffa76f9)
 
 ### 4. Profile Management & Editing
 
 Easily toggle between active profiles or modify existing settings on the fly.
 
-<!-- Sostituisci con il link GitHub della tua GIF: assets/change-profile-status.gif -->
-
-![Profile Management & Editing](<img width="800" height="478" alt="Image" src="https://github.com/user-attachments/assets/8476f466-2cf3-46d7-8d93-5148d483246e" />)
+![Profile Management & Editing](https://github.com/user-attachments/assets/8476f466-2cf3-46d7-8d93-5148d483246e)
 
 ### 5. Deleting a Profile
 
 Remove profiles you no longer need directly from the management panel.
 
-<!-- Sostituisci con il link GitHub della tua GIF: assets/delete-profile.gif -->
-
-![Deleting a Profile](<img width="800" height="479" alt="Image" src="https://github.com/user-attachments/assets/28acc62c-50a4-4b00-9fc0-82713f45ac0d" />)
+![Deleting a Profile](https://github.com/user-attachments/assets/28acc62c-50a4-4b00-9fc0-82713f45ac0d)
 
 ---
 
@@ -75,7 +67,7 @@ Remove profiles you no longer need directly from the management panel.
 
 ### For Users
 
-1. Go to the [**Releases**](https://github.com/TUO_USERNAME/windowsflow/releases) section.
+1. Go to the [**Releases**](https://github.com/Federaiko15/WINDOWSFLOW/releases) section.
 2. Download the latest **`WindowsFlow.Setup.1.0.0.exe`**.
 3. Run the installer and follow the on-screen instructions.
 
