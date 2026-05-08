@@ -1,6 +1,6 @@
-# WindowFlow 🚀
+# WindowsFlow 🚀
 
-**WindowFlow** is a modern Windows automation utility designed to streamline your workspace. It automatically manages system themes, keyboard layouts, and custom settings based on your activity or the peripherals you connect.
+**WindowsFlow** is a modern Windows automation utility designed to streamline your workspace. It automatically manages system themes, keyboard layouts, and custom settings based on your activity or the peripherals you connect.
 
 ---
 
@@ -17,7 +17,7 @@
 
 ## 💻 Tech Stack
 
-WindowFlow is built using a modern, robust architecture to ensure performance and cross-process stability:
+WindowsFlow is built using a modern, robust architecture to ensure performance and cross-process stability:
 
 | Layer        | Technology                                                                    |
 | :----------- | :---------------------------------------------------------------------------- |
@@ -35,25 +35,25 @@ WindowFlow is built using a modern, robust architecture to ensure performance an
 
 Set up a profile in seconds by defining its name and base theme settings.
 
-<video src="https://github.com/Federaiko15/WINDOWSFLOW/raw/main/assets/profile-creation.mp4" width="100%" autoplay loop muted playsinline></video>
+<video src="https://github.com/Federaiko15/WINDOWSFLOW/main/assets/profile-creation.mp4" width="100%" autoplay loop muted playsinline></video>
 
 ### 2. Setting up Dynamic Themes
 
 Schedule your system's appearance to change automatically throughout the day.
 
-<video src="https://github.com/Federaiko15/WINDOWSFLOW/raw/main/assets/change-theme.mp4" width="100%" autoplay loop muted playsinline></video>
+<video src="https://github.com/Federaiko15/WINDOWSFLOW/main/assets/change-theme.mp4" width="100%" autoplay loop muted playsinline></video>
 
 ### 3. Adding USB Peripherals
 
 Make your profiles "hardware-aware" by linking them to specific USB devices.
 
-<video src="https://github.com/Federaiko15/WINDOWSFLOW/raw/main/assets/usb-watcher.mp4" width="100%" autoplay loop muted playsinline></video>
+<video src="https://github.com/Federaiko15/WINDOWSFLOW/main/assets/usb-watcher.mp4" width="100%" autoplay loop muted playsinline></video>
 
 ### 4. Profile Management & Editing
 
 Easily toggle between active profiles or modify existing settings on the fly.
 
-<video src="https://github.com/Federaiko15/WINDOWSFLOW/raw/main/assets/change-profile-status.mp4" width="100%" autoplay loop muted playsinline></video>
+<video src="https://github.com/Federaiko15/WINDOWSFLOW/main/assets/change-profile-status.mp4" width="100%" autoplay loop muted playsinline></video>
 
 ---
 
