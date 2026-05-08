@@ -35,7 +35,7 @@ WindowsFlow is built using a modern, robust architecture to ensure performance a
 
 Set up a profile in seconds by defining its name and base theme settings.
 
-![Creating a New Profile](https://github.com/user-attachments/assets/5c15847c-f8fd-4355-8ccc-9fcd0c81e352)
+![Creating a New Profile](https://github.com/user-attachments/assets/9e6fccad-d21a-4b4d-88bd-4b6ecd24f82f)
 
 ### 2. Setting up Dynamic Themes
 
