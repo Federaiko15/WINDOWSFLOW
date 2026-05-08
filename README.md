@@ -1,6 +1,6 @@
-# WindowFlow 🚀
+# WindowsFlow 🚀
 
-**WindowFlow** is a modern Windows automation utility designed to streamline your workspace. It automatically manages system themes, keyboard layouts, and custom settings based on your activity or the peripherals you connect.
+**WindowsFlow** is a modern Windows automation utility designed to streamline your workspace. It automatically manages system themes, keyboard layouts, and custom settings based on your activity or the peripherals you connect.
 
 ---
 
@@ -17,7 +17,7 @@
 
 ## 💻 Tech Stack
 
-WindowFlow is built using a modern, robust architecture to ensure performance and cross-process stability:
+WindowsFlow is built using a modern, robust architecture to ensure performance and cross-process stability:
 
 | Layer        | Technology                                                                    |
 | :----------- | :---------------------------------------------------------------------------- |
@@ -35,25 +35,39 @@ WindowFlow is built using a modern, robust architecture to ensure performance an
 
 Set up a profile in seconds by defining its name and base theme settings.
 
-<video src="https://github.com/TUO_USERNAME/windowflow/raw/main/assets/profile-creation.mp4" width="100%" autoplay loop muted playsinline></video>
+![Creating a New Profile](<img width="800" height="478" alt="Image" src="https://github.com/user-attachments/assets/5c15847c-f8fd-4355-8ccc-9fcd0c81e352" />)
 
 ### 2. Setting up Dynamic Themes
 
 Schedule your system's appearance to change automatically throughout the day.
 
-<video src="https://github.com/TUO_USERNAME/windowflow/raw/main/assets/change-theme.mp4" width="100%" autoplay loop muted playsinline></video>
+<!-- Sostituisci con il link GitHub della tua GIF: assets/change-theme.gif -->
+
+![Setting up Dynamic Themes](<img width="800" height="480" alt="Image" src="https://github.com/user-attachments/assets/78a1c636-ecba-4c02-b5c8-1134330260a3" />)
 
 ### 3. Adding USB Peripherals
 
 Make your profiles "hardware-aware" by linking them to specific USB devices.
 
-<video src="https://github.com/TUO_USERNAME/windowflow/raw/main/assets/usb-watcher.mp4" width="100%" autoplay loop muted playsinline></video>
+<!-- Sostituisci con il link GitHub della tua GIF: assets/usb-watcher.gif -->
+
+![Adding USB Peripherals](<img width="800" height="478" alt="Image" src="https://github.com/user-attachments/assets/026df7a3-705a-413c-ab53-f61ffffa76f9" />)
 
 ### 4. Profile Management & Editing
 
 Easily toggle between active profiles or modify existing settings on the fly.
 
-<video src="https://github.com/TUO_USERNAME/windowflow/raw/main/assets/change-profile-status.mp4" width="100%" autoplay loop muted playsinline></video>
+<!-- Sostituisci con il link GitHub della tua GIF: assets/change-profile-status.gif -->
+
+![Profile Management & Editing](<img width="800" height="478" alt="Image" src="https://github.com/user-attachments/assets/8476f466-2cf3-46d7-8d93-5148d483246e" />)
+
+### 5. Deleting a Profile
+
+Remove profiles you no longer need directly from the management panel.
+
+<!-- Sostituisci con il link GitHub della tua GIF: assets/delete-profile.gif -->
+
+![Deleting a Profile](<img width="800" height="479" alt="Image" src="https://github.com/user-attachments/assets/28acc62c-50a4-4b00-9fc0-82713f45ac0d" />)
 
 ---
 
@@ -61,13 +75,13 @@ Easily toggle between active profiles or modify existing settings on the fly.
 
 ### For Users
 
-1. Go to the **Releases** section.
-2. Download the latest `WindowFlow.zip`.
-3. Extract and run `WindowFlow.exe`.
+1. Go to the [**Releases**](https://github.com/TUO_USERNAME/windowsflow/releases) section.
+2. Download the latest **`WindowsFlow.Setup.1.0.0.exe`**.
+3. Run the installer and follow the on-screen instructions.
 
 ### For Developers (Local Setup)
 
-1. Clone the repository: `git clone https://github.com/yourusername/windowflow.git`
+1. Clone the repository: `git clone https://github.com/TUO_USERNAME/windowsflow.git`
 2. Install dependencies: `npm install`
 3. Run the application: `npm start`
 
