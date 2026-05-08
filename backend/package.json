@@ -1,6 +1,6 @@
 {
   "name": "windowsflow",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "App per la gestione di layout e temi in base all'hardware",
   "author": "Federico",
   "main": "main.js",
