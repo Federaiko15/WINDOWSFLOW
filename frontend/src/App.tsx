@@ -32,9 +32,12 @@ function App() {
   return (
     <>
       <div className="principal-container">
-        <button onClick={handleGetProfiles} className="get_profile_button">
-          Get Profiles
-        </button>
+        <div className="app-header">
+          <h1 className="app-title">WindowsFlow</h1>
+          <button onClick={handleGetProfiles} className="get_profile_button">
+            Get Profiles
+          </button>
+        </div>
 
         <div className="content-split">
           <div className="left-panel">
@@ -65,7 +68,7 @@ function App() {
                     checked={!isDynamicTheme}
                     onChange={() => setIsDynamicTheme(false)}
                   />
-                  Tema Statico
+                  Static Theme
                 </label>
                 <input
                   type="text"
@@ -83,7 +86,7 @@ function App() {
                     checked={isDynamicTheme}
                     onChange={() => setIsDynamicTheme(true)}
                   />
-                  Tema Dinamico
+                  Dinamic Theme
                 </label>
                 <input
                   type="time"
@@ -105,6 +108,19 @@ function App() {
             </form>
           </div>
         </div>
+
+        <footer className="app-footer">
+          <p>
+            Created with ❤️ by Federico •{" "}
+            <a
+              href="https://github.com/Federaiko15/WINDOWSFLOW"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on GitHub
+            </a>
+          </p>
+        </footer>
       </div>
     </>
   );

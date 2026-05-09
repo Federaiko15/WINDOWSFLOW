@@ -93,23 +93,23 @@ export default function Profile({ profile }: { profile: Profile }) {
             Theme:{" "}
             {typeof profile.theme === "string"
               ? profile.theme
-              : `Dinamico (Chiaro: ${(profile.theme as DinamicTheme)?.startLight}, Scuro: ${(profile.theme as DinamicTheme)?.startDark})`}
+              : `Dinamic (Light: ${(profile.theme as DinamicTheme)?.startLight}, Dark: ${(profile.theme as DinamicTheme)?.startDark})`}
           </p>
           <p className="active_status">
-            Attivo: {profile.active ? "Sì" : "No"}
+            Active: {profile.active ? "Yes" : "No"}
           </p>
           <div className="profile_actions">
             <button
               className="btn_delete_profile"
               onClick={() => setWantDeleteProfile(true)}
             >
-              Elimina
+              Delete Profile
             </button>
             <button className="btn_add_device" onClick={handleOpenEditTheme}>
-              Modifica Tema
+              Change Theme
             </button>
             <button className="btn_add_device" onClick={addDevice}>
-              + Periferica
+              + Device
             </button>
           </div>
 
@@ -121,7 +121,9 @@ export default function Profile({ profile }: { profile: Profile }) {
                 onClick={() => setSelectedDevice(device)}
               >
                 <span className="device_info">
-                  <span title={device.isConnected ? "Connesso" : "Scollegato"}>
+                  <span
+                    title={device.isConnected ? "Connected" : "Disconnected"}
+                  >
                     {device.isConnected ? "🟢 " : "🔴 "}
                   </span>
                   {device.name} <small>({device.type})</small>
@@ -133,7 +135,7 @@ export default function Profile({ profile }: { profile: Profile }) {
                     deleteDevice(device);
                   }}
                 >
-                  Rimuovi
+                  Remove
                 </button>
               </li>
             ))}
@@ -153,20 +155,20 @@ export default function Profile({ profile }: { profile: Profile }) {
         <div className="delete_profile_overlay">
           <div className="delete_profile_modal">
             <h3 className="delete_profile_title">
-              Sei sicuro di voler eliminare il profilo?
+              Do you want to delete the profile?
             </h3>
             <div className="delete_profile_buttons">
               <button
                 className="btn_delete_profile_confirm"
                 onClick={deleteProfile}
               >
-                Elimina
+                Delete
               </button>
               <button
                 className="btn_cancel_delete"
                 onClick={() => setWantDeleteProfile(false)}
               >
-                Annulla
+                Cancel
               </button>
             </div>
           </div>

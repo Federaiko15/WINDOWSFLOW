@@ -36,6 +36,25 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 3rem);
+}
+
+.app-header {
+  margin-bottom: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.app-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--win-text);
+  letter-spacing: -0.5px;
 }
 
 button {
@@ -64,10 +83,10 @@ button:active {
 }
 
 .get_profile_button {
-  margin: 0 auto 1.5rem auto;
-  display: block;
+  margin: 0;
   min-width: 200px;
   font-size: 14px;
+  border-radius: var(--win-radius);
 }
 
 .content-split {
@@ -179,4 +198,23 @@ input[type="radio"] {
   color: var(--win-text-secondary);
   font-style: italic;
   font-size: 14px;
+}
+
+.app-footer {
+  margin-top: auto;
+  padding-bottom: 2rem;
+  text-align: center;
+  font-size: 13px;
+  color: var(--win-text-secondary);
+}
+
+.app-footer a {
+  color: var(--win-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.app-footer a:hover {
+  color: var(--win-accent-hover);
+  text-decoration: underline;
 }

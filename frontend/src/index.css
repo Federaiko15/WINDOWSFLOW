@@ -39,3 +39,14 @@ body {
   background-color: var(--bg-color);
   color: #575279;
 }
+
+/* Fix per le barre di scorrimento orizzontali e verticali causate dagli overlay */
+.socket_overlay,
+.delete_profile_overlay,
+.edit_theme_overlay {
+  width: 100% !important;
+  height: 100% !important;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+}

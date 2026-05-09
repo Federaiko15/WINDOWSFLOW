@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, shell } from "electron";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -15,12 +15,31 @@ function createWindow() {
     autoHideMenuBar: true, // Nasconde la barra dei menu stile Windows
   });
 
-  // Carica l'URL servito dal nostro server Express locale sulla porta corretta
-  const PORT = process.env.PORT || 4000;
-  win.loadURL(`http://localhost:${PORT}`);
+  if (!app.isPackaged) {
+    // In sviluppo carica direttamente il server Vite del frontend per avere le modifiche live
+    win.loadURL("http://localhost:5173");
+  } else {
+    // In produzione (app compilata) carica l'URL del backend
+    const PORT = process.env.PORT || 4000;
+    win.loadURL(`http://localhost:${PORT}`);
+  }
 
   // I DevTools sono disattivati per la versione in produzione
   // win.webContents.openDevTools();
+
+  // Forza l'apertura dei link (es. GitHub) nel browser predefinito di Windows
+  win.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: "deny" };
+  });
+
+  // Intercetta anche la navigazione diretta ai link esterni (es. GitHub) e la forza nel browser
+  win.webContents.on("will-navigate", (event, url) => {
+    if (!url.includes("localhost")) {
+      event.preventDefault();
+      shell.openExternal(url);
+    }
+  });
 }
 
 app.whenReady().then(async () => {

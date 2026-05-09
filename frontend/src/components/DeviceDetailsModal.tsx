@@ -91,7 +91,7 @@ export default function DeviceDetailsModal({
         </div>
         <div className="device_details_content">
           <p>
-            <strong>Tipo:</strong> {device.type}
+            <strong>Type:</strong> {device.type}
           </p>
           <p>
             <strong>Vendor ID:</strong> {device.idVendor}
@@ -101,8 +101,8 @@ export default function DeviceDetailsModal({
           </p>
           {device.type === "keyboard" && (
             <label>
-              <p>Layout corrente: {currentLayoutDisplay}</p>
-              <strong>Selezione il layout: </strong>
+              <p>Current Layout: {currentLayoutDisplay}</p>
+              <strong>Select Layout: </strong>
               <select
                 value={selectedLayout}
                 onChange={(e) => {
@@ -129,7 +129,7 @@ export default function DeviceDetailsModal({
                   );
                 }}
               >
-                Cambia Layout
+                Change Layout
               </button>
             </label>
           )}

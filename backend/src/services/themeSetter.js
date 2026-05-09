@@ -109,7 +109,7 @@ const setTheme = (theme) => {
 
   return new Promise((resolve, reject) => {
     exec(
-      `powershell -Command "Set-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'AppsUseLightTheme' -Value ${value}"`,
+      `powershell -Command "Set-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'SystemUsesLightTheme' -Value ${value}"`,
       (error, stdout, stderr) => {
         if (error) {
           reject(error);
@@ -117,7 +117,7 @@ const setTheme = (theme) => {
         }
         // Secondo comando separato
         exec(
-          `powershell -Command "Set-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'SystemUsesLightTheme' -Value ${value}"`,
+          `powershell -Command "Set-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'AppsUseLightTheme' -Value ${value}"`,
           (error2) => {
             if (error2) reject(error2);
             else resolve();
