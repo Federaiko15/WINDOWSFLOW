@@ -68,12 +68,12 @@ Remove profiles you no longer need directly from the management panel.
 ### For Users
 
 1. Go to the [**Releases**](https://github.com/Federaiko15/WINDOWSFLOW/releases) section.
-2. Download the latest **`WindowsFlow.Setup.1.0.0.exe`**.
+2. Download the latest **`WindowsFlow.Setup.X.X.X.exe`**.
 3. Run the installer and follow the on-screen instructions.
 
 ### For Developers (Local Setup)
 
-1. Clone the repository: `git clone https://github.com/TUO_USERNAME/windowsflow.git`
+1. Clone the repository: `git clone https://github.com/Federaiko15/windowsflow.git`
 2. Install dependencies: `npm install`
 3. Run the application: `npm start`
 
@@ -84,5 +84,3 @@ Remove profiles you no longer need directly from the management panel.
 If you have ideas for new automation gestures or features, feel free to open an **Issue** or submit a **Pull Request**.
 
 ---
-
-_Created with ❤️ to make Windows more adaptive._
