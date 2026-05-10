@@ -3,9 +3,11 @@ import ProfileCard from "./components/Profile";
 import { useSocket } from "./SocketContext";
 import "./style/App.css";
 import { useCreateProfile } from "./hooks/useCreateProfile";
+import { useTheme } from "./ThemeContext";
 
 function App() {
   const { getProfiles: emitGetProfiles, profiles } = useSocket();
+  const { appThemeSetting, setAppThemeSetting } = useTheme();
 
   const {
     profileName,
@@ -34,10 +36,22 @@ function App() {
       <div className="principal-container">
         <div className="app-header">
           <h1 className="app-title">WindowsFlow</h1>
-          <button onClick={handleGetProfiles} className="get_profile_button">
-            Get Profiles
-          </button>
+          <div className="header-actions">
+            <select
+              className="theme-selector"
+              value={appThemeSetting}
+              onChange={(e) => setAppThemeSetting(e.target.value as any)}
+            >
+              <option value="active-profile">Active Profile Theme</option>
+              <option value="light">Light Theme</option>
+              <option value="dark">Dark Theme</option>
+            </select>
+            <button onClick={handleGetProfiles} className="get_profile_button">
+              Get Profiles
+            </button>
+          </div>
         </div>
+        <div className="header-separator"></div>
 
         <div className="content-split">
           <div className="left-panel">
@@ -109,6 +123,7 @@ function App() {
           </div>
         </div>
 
+        <div className="footer-separator"></div>
         <footer className="app-footer">
           <p>
             Created with ❤️ by Federico •{" "}

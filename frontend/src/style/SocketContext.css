@@ -12,7 +12,7 @@
 }
 
 .socket_modal {
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: var(--win-surface-transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   color: var(--win-text);
@@ -88,5 +88,5 @@
 }
 
 .btn_cancel_listening:hover {
-  background-color: #f0f0f0;
+  background-color: var(--win-surface-hover);
 }

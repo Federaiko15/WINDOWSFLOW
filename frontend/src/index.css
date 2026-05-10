@@ -1,19 +1,43 @@
 :root {
-  --base: #faf4ed;
-  --surface: #fffaf3;
-  --overlay: #f2e9e1;
-  --muted: #9893a5;
-  --subtle: #797593;
-  --text: #575279;
-  --love: #b4637a;
-  --gold: #ea9d34;
-  --rose: #d7827e;
-  --pine: #286983;
-  --foam: #56949f;
-  --iris: #907aa9;
-  --hl-low: #f4ebe8;
-  --hl-med: #dfdad9;
-  --hl-high: #cecacd;
+  /* Variabili globali condivise */
+  --win-radius: 8px;
+  --win-radius-sm: 4px;
+}
+
+body.theme-light {
+  --win-bg: #f3f3f3;
+  --win-surface: #ffffff;
+  --win-surface-hover: #f0f0f0;
+  --win-surface-transparent: rgba(255, 255, 255, 0.85);
+  --win-text: #1a1a1a;
+  --win-text-secondary: #616161;
+  --win-border: #e5e5e5;
+  --win-accent: #0078d4;
+  --win-accent-hover: #005a9e;
+  --win-accent-text: #ffffff;
+  --win-danger: #d13438;
+  --win-danger-hover: #a82a2d;
+  --win-danger-bg-hover: #fde7e9;
+  --win-danger-text: #ffffff;
+  --win-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+body.theme-dark {
+  --win-bg: #202020;
+  --win-surface: #2c2c2c;
+  --win-surface-hover: #3a3a3a;
+  --win-surface-transparent: rgba(44, 44, 44, 0.85);
+  --win-text: #ffffff;
+  --win-text-secondary: #a0a0a0;
+  --win-border: #444444;
+  --win-accent: #60cdff;
+  --win-accent-hover: #3b82f6;
+  --win-accent-text: #000000;
+  --win-danger: #ff4343;
+  --win-danger-hover: #e81123;
+  --win-danger-bg-hover: #4a1a1c;
+  --win-danger-text: #ffffff;
+  --win-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 html,
@@ -36,8 +60,11 @@ body {
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
-  background-color: var(--bg-color);
-  color: #575279;
+  background-color: var(--win-bg);
+  color: var(--win-text);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 /* Fix per le barre di scorrimento orizzontali e verticali causate dagli overlay */

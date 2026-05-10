@@ -57,6 +57,46 @@ body {
   letter-spacing: -0.5px;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.theme-selector {
+  padding: 6px 12px;
+  border-radius: var(--win-radius-sm);
+  border: 1px solid var(--win-border);
+  background-color: var(--win-surface);
+  color: var(--win-text);
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.theme-selector:focus {
+  border-color: var(--win-accent);
+}
+
+.header-separator,
+.footer-separator {
+  height: 1px;
+  width: 70%;
+  margin: 0 auto 30px auto;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--win-border),
+    transparent
+  );
+}
+
+.footer-separator {
+  margin: 40px auto 10px auto;
+}
+
 button {
   background-color: var(--win-surface);
   color: var(--win-text);
@@ -145,10 +185,11 @@ input[type="time"]:focus {
 }
 
 input:disabled {
-  background-color: #f9f9f9;
-  color: #999999;
+  background-color: var(--win-bg);
+  color: var(--win-text-secondary);
   cursor: not-allowed;
   border-color: var(--win-border);
+  opacity: 0.6;
 }
 
 .theme-selection {
