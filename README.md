@@ -61,6 +61,12 @@ Remove profiles you no longer need directly from the management panel.
 
 ![Deleting a Profile](https://github.com/user-attachments/assets/28acc62c-50a4-4b00-9fc0-82713f45ac0d)
 
+### 6. Full Example  
+
+Change the theme and the keyboard layout when active a profile
+
+![Full Example] (https://github.com/user-attachments/assets/64c4e0ed-45aa-428d-861a-bfa0d8cb6ca0)
+
 ---
 
 ## 🛠️ Installation & Setup
