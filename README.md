@@ -47,7 +47,7 @@ Schedule your system's appearance to change automatically throughout the day.
 
 Make your profiles "hardware-aware" by linking them to specific USB devices.
 
-![Adding USB Peripherals](https://github.com/user-attachments/assets/026df7a3-705a-413c-ab53-f61ffffa76f9)
+![Adding USB Peripherals](https://github.com/Federaiko15/WINDOWSFLOW/issues/3#issue-4405152407)
 
 ### 4. Profile Management & Editing
 
