@@ -65,7 +65,7 @@ Remove profiles you no longer need directly from the management panel.
 
 Change the theme and the keyboard layout when active a profile
 
-![Full Example] (https://github.com/user-attachments/assets/64c4e0ed-45aa-428d-861a-bfa0d8cb6ca0)
+![Full Example](https://github.com/user-attachments/assets/64c4e0ed-45aa-428d-861a-bfa0d8cb6ca0)
 
 ---
 
