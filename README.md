@@ -47,7 +47,7 @@ Schedule your system's appearance to change automatically throughout the day.
 
 Make your profiles "hardware-aware" by linking them to specific USB devices.
 
-![Adding USB Peripherals]([https://github.com/user-attachments/assets/026df7a3-705a-413c-ab53-f61ffffa76f9](https://github.com/user-attachments/assets/7c56ebd8-132c-4971-93ec-b2f6c06dbfae))
+![Adding USB Peripherals](https://github.com/user-attachments/assets/026df7a3-705a-413c-ab53-f61ffffa76f9](https://github.com/user-attachments/assets/7c56ebd8-132c-4971-93ec-b2f6c06dbfae)
 
 ### 4. Profile Management & Editing
 
